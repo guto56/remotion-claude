@@ -86,7 +86,7 @@ export const Anuncio: React.FC<AnuncioProps> = ({
         </TransitionSeries.Sequence>
       </TransitionSeries>
 
-      {withAudio ? <AdAudio /> : null}
+      {withAudio ? <AdAudio gancho={gancho} /> : null}
       {showSafeZone ? <SafeZoneOverlay layout={layout} /> : null}
     </AbsoluteFill>
   );

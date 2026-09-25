@@ -93,6 +93,29 @@ export const BENEFICIOS = {
   pulso: 70, // os checks dão um "pulo" em sequência (mantém a tela viva)
 };
 
+// Locução: frame ABSOLUTO em que cada fala começa (arquivos em public/voz/<arquivo>.mp3).
+// `frames` = duração da fala; a música abaixa nesse intervalo.
+// `gancho` = fala usada só na composição com esse gancho.
+export type Fala = {
+  arquivo: string;
+  de: number;
+  frames: number;
+  gancho?: "dor" | "pergunta";
+};
+
+export const VOZ: Fala[] = [
+  { arquivo: "gancho-dor", de: 3, frames: 84, gancho: "dor" },
+  { arquivo: "gancho-pergunta", de: 3, frames: 93, gancho: "pergunta" },
+  { arquivo: "dor", de: 98, frames: 86 },
+  { arquivo: "dado", de: 192, frames: 83 },
+  { arquivo: "virada", de: 282, frames: 94 },
+  { arquivo: "demo-1", de: 381, frames: 78 },
+  { arquivo: "demo-2", de: 480, frames: 87 },
+  { arquivo: "demo-3", de: 587, frames: 72 },
+  { arquivo: "beneficios", de: 668, frames: 66 },
+  { arquivo: "cta", de: 778, frames: 105 },
+];
+
 // Cena 7: relativo a SCENES.cta
 export const CTA = {
   logo: 4,

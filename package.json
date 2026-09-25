@@ -32,6 +32,8 @@
     "render:dor": "remotion render Anuncio-Dor out/anuncio-dor.mp4 --codec h264 --crf 18",
     "render:pergunta": "remotion render Anuncio-Pergunta out/anuncio-pergunta.mp4 --codec h264 --crf 18",
     "render:feed": "remotion render Anuncio-Feed out/anuncio-feed.mp4 --codec h264 --crf 18",
+    "render:audio-dor": "remotion render Anuncio-Dor out/anuncio-dor-audio.mp3 --codec mp3",
+    "render:audio-pergunta": "remotion render Anuncio-Pergunta out/anuncio-pergunta-audio.mp3 --codec mp3",
     "upgrade": "remotion upgrade",
     "lint": "eslint src && tsc"
   },

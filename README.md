@@ -38,7 +38,15 @@ Tudo em `src/anuncio/`:
 Todos são opcionais: se faltarem, o vídeo renderiza mesmo assim.
 
 - `logo.png`: logo da Corso (no avatar do chat e na chamada final). Sem ela aparecem as iniciais "CA".
-- `music.mp3` (volume 0.15, com fade), `ping.mp3`, `pop.mp3`, `swoosh.mp3` (volume 0.6).
+- Música e efeitos: `music.mp3` (volume 0.15, com fade, abaixa durante a locução), `ping.mp3`, `pop.mp3`, `swoosh.mp3`, `relogio.mp3`, `impacto.mp3`, `sucesso.mp3`. Foram sintetizados por `scripts/sintetizar-audio.py` (sem direitos autorais). Para trocar um som, substitua o arquivo mantendo o nome.
+- Locução: `voz/<id>.mp3`, gerada no Higgsfield. Textos em `copy.ts` (`locucao`), momentos em `timing.ts` (`VOZ`).
+
+## Só o áudio (30 s, já mixado)
+
+```bash
+npm run render:audio-dor        # out/anuncio-dor-audio.mp3 (serve também para o Feed)
+npm run render:audio-pergunta   # out/anuncio-pergunta-audio.mp3
+```
 
 ## Props (painel da direita no Studio)
 

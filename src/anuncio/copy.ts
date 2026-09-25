@@ -105,6 +105,22 @@ export const copy = {
     chamada: "Toque em [Enviar mensagem] e teste agora",
     subtexto: "Quem vai te responder é a nossa assistente.",
   },
+
+  // Locução: texto usado para GERAR os áudios de public/voz/<id>.mp3.
+  // Mudar aqui não muda o som: é preciso gerar a fala de novo.
+  // Os momentos de cada fala ficam em timing.ts (VOZ).
+  locucao: {
+    "gancho-dor": "Seu paciente te chamou às onze da noite.",
+    "gancho-pergunta": "Quanto tempo sua clínica demora pra responder?",
+    dor: "De manhã... ele já marcou na concorrente.",
+    dado: "Cinco minutos fazem toda a diferença.",
+    virada: "E se sua clínica respondesse em três segundos?",
+    "demo-1": "Ela responde na hora, a qualquer hora.",
+    "demo-2": "Mostra os horários reais da sua agenda...",
+    "demo-3": "...e agenda o paciente sozinha.",
+    beneficios: "Enquanto isso, você só atende.",
+    cta: "Quer isso na sua clínica? Toque em enviar mensagem.",
+  },
 } as const;
 
 export type ChatMessage = {
