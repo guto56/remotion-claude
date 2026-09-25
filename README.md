@@ -6,7 +6,7 @@ Vídeo de anúncio para Reels/Feed com 3 composições:
 | --- | --- | --- |
 | `Anuncio-Dor` | 1080x1920, 30 s | gancho "Seu paciente chamou às 23h." |
 | `Anuncio-Pergunta` | 1080x1920, 30 s | gancho "Quanto tempo sua clínica demora pra responder?" |
-| `Anuncio-Feed` | 1080x1350 (4:5), 30 s | mesmo roteiro, celular menor e textos acima |
+| `Anuncio-Feed` | 1080x1350 (4:5), 30 s | gancho em pergunta, celular menor e textos acima |
 
 ## Rodar
 
@@ -44,8 +44,8 @@ Todos são opcionais: se faltarem, o vídeo renderiza mesmo assim.
 ## Só o áudio (30 s, já mixado)
 
 ```bash
-npm run render:audio-dor        # out/anuncio-dor-audio.mp3 (serve também para o Feed)
-npm run render:audio-pergunta   # out/anuncio-pergunta-audio.mp3
+npm run render:audio-dor        # out/anuncio-dor-audio.mp3
+npm run render:audio-pergunta   # out/anuncio-pergunta-audio.mp3 (serve também para o Feed)
 ```
 
 ## Props (painel da direita no Studio)

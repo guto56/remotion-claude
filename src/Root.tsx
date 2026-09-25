@@ -44,7 +44,7 @@ export const RemotionRoot: React.FC = () => {
           withAudio: true,
         }}
       />
-      {/* Feed 4:5 */}
+      {/* Feed 4:5, com o gancho em pergunta */}
       <Composition
         id="Anuncio-Feed"
         component={Anuncio}
@@ -55,7 +55,7 @@ export const RemotionRoot: React.FC = () => {
         width={1080}
         height={1350}
         defaultProps={{
-          gancho: "dor",
+          gancho: "pergunta",
           formato: "feed",
           showSafeZone: false,
           withAudio: true,

@@ -50,6 +50,8 @@ export const AdAudio: React.FC<{ gancho: "dor" | "pergunta" }> = ({ gancho }) =>
   // pop: cada mensagem da cena 5
   const pops = DEMO.mensagens.map((m) => SCENES.demo + m);
   const confirmacao = SCENES.demo + DEMO.mensagens[DEMO.mensagens.length - 1];
+  // Os pings só abaixam quando há fala no gancho por cima deles
+  const temFalaNoGancho = falas.some((f) => f.gancho !== undefined);
 
   // 0 = ninguém falando, 1 = fala em andamento (com rampas de 6/8 frames)
   const speaking = (f: number) =>
@@ -85,8 +87,7 @@ export const AdAudio: React.FC<{ gancho: "dor" | "pergunta" }> = ({ gancho }) =>
       ) : null}
 
       {/* Efeitos */}
-      {/* pings mais baixos: tocam junto com a fala do gancho */}
-      {sfx(ping, pings, "ping", 0.3)}
+      {sfx(ping, pings, "ping", temFalaNoGancho ? 0.3 : SFX_VOLUME)}
       {sfx(relogio, [SCENES.dor + DOR.relogioInicio], "relogio", 0.5)}
       {sfx(impacto, [SCENES.dado + DADO.contagemFim], "impacto", 0.3)}
       {sfx(swoosh, [SCENES.virada], "swoosh")}
