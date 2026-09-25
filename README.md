@@ -1,54 +1,47 @@
-# Remotion video
+# Anúncio Corso Automação (Remotion)
 
-<p align="center">
-  <a href="https://github.com/remotion-dev/logo">
-    <picture>
-      <source media="(prefers-color-scheme: dark)" srcset="https://github.com/remotion-dev/logo/raw/main/animated-logo-banner-dark.apng">
-      <img alt="Animated Remotion Logo" src="https://github.com/remotion-dev/logo/raw/main/animated-logo-banner-light.gif">
-    </picture>
-  </a>
-</p>
+Vídeo de anúncio para Reels/Feed com 3 composições:
 
-Welcome to your Remotion project!
+| Composição | Formato | O que muda |
+| --- | --- | --- |
+| `Anuncio-Dor` | 1080x1920, 30 s | gancho "Seu paciente chamou às 23h." |
+| `Anuncio-Pergunta` | 1080x1920, 30 s | gancho "Quanto tempo sua clínica demora pra responder?" |
+| `Anuncio-Feed` | 1080x1350 (4:5), 30 s | mesmo roteiro, celular menor e textos acima |
 
-## Commands
+## Rodar
 
-**Install Dependencies**
-
-```console
-npm i
+```bash
+npm install
+npx remotion studio      # ou: npm run dev
 ```
 
-**Start Preview**
+## Renderizar
 
-```console
-npm run dev
+```bash
+npm run render:dor        # out/anuncio-dor.mp4
+npm run render:pergunta   # out/anuncio-pergunta.mp4
+npm run render:feed       # out/anuncio-feed.mp4
 ```
 
-**Render video**
+## Onde editar
 
-```console
-npx remotion render
-```
+Tudo em `src/anuncio/`:
 
-**Upgrade Remotion**
+- **Textos**: `copy.ts`. Nos títulos, `[colchetes]` marcam a palavra destacada. Nas mensagens do chat, `*asteriscos*` viram negrito e `\n` quebra a linha.
+- **Cores, fontes e tamanhos**: `theme.ts`.
+- **Tempos**: `timing.ts`. `SCENES` tem o frame em que cada cena começa (30 frames = 1 s); os outros blocos têm os tempos de dentro de cada cena, contados a partir do início dela. É ali que ficam os momentos de cada mensagem do chat (`DEMO.mensagens`).
+- **Posições** (Reels x Feed): `layout.ts`.
+- **Ícones das pílulas** (Zap, CalendarDays, CheckCircle2): `scenes/LightScene.tsx`.
 
-```console
-npx remotion upgrade
-```
+## Arquivos em `public/`
 
-## Docs
+Todos são opcionais: se faltarem, o vídeo renderiza mesmo assim.
 
-Get started with Remotion by reading the [fundamentals page](https://www.remotion.dev/docs/the-fundamentals).
+- `logo.png`: logo da Corso (no avatar do chat e na chamada final). Sem ela aparecem as iniciais "CA".
+- `music.mp3` (volume 0.15, com fade), `ping.mp3`, `pop.mp3`, `swoosh.mp3` (volume 0.6).
 
-## Help
+## Props (painel da direita no Studio)
 
-We provide help on our [Discord server](https://discord.gg/6VzzNDwUwV).
-
-## Issues
-
-Found an issue with Remotion? [File an issue here](https://github.com/remotion-dev/remotion/issues/new).
-
-## License
-
-Note that for some entities a company license is needed. [Read the terms here](https://github.com/remotion-dev/remotion/blob/main/LICENSE.md).
+- `showSafeZone`: desenha em vermelho as faixas cobertas pela interface do Instagram (250 px no topo, 670 px embaixo) e as margens laterais de 64 px. Use só para conferir; deixe `false` para renderizar.
+- `withAudio`: liga/desliga todo o áudio.
+- `gancho` e `formato`: já vêm certos em cada composição.
