@@ -117,7 +117,7 @@ export const copy = {
     virada: "E se sua clínica respondesse em três segundos?",
     "demo-1": "Ela responde na hora, a qualquer hora.",
     "demo-2": "Mostra os horários reais da sua agenda...",
-    "demo-3": "...e agenda o paciente sozinha.",
+    "demo-3": "E agenda o paciente sozinha.",
     beneficios: "Enquanto isso, você só atende.",
     cta: "Quer isso na sua clínica? Toque em enviar mensagem.",
   },

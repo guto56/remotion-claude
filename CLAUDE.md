@@ -16,6 +16,13 @@ Projeto Remotion do anúncio da Corso Automação (veja README.md). Use as skill
 - `src/anuncio/scenes/`: `NightScene` (cenas 1-2), `StatScene` (3), `LightScene` (4-6), `CtaScene` (7)
 - `src/anuncio/components/`: componentes visuais reutilizáveis
 
+## Áudio
+
+- Música e efeitos em `public/*.mp3`, sintetizados por `scripts/sintetizar-audio.py` (numpy + scipy).
+- Locução em `public/voz/<id>.mp3`, gerada no Higgsfield (Seed Audio, voz "Andre", `speech_rate` 10). Os arquivos gerados ficam em `d8j0ntlcm91z4.cloudfront.net` (precisa estar liberado na rede do ambiente). Processar com `scripts/preparar-voz.py <pasta>` e atualizar `VOZ` em `timing.ts` com as durações.
+- Evite reticências no começo do texto de uma fala: o modelo solta um "e" isolado e acelera o resto.
+- Mixagem em `src/anuncio/AdAudio.tsx`. Pico da mixagem final deve ficar abaixo de -1 dBFS.
+
 ## Regras do anúncio
 
 - No Reels, todo conteúdo importante fica entre y=260 e y=1240 e a 64 px das laterais. Confira com `showSafeZone`.
