@@ -103,18 +103,19 @@ export type Fala = {
   gancho?: "dor" | "pergunta";
 };
 
-// Durações medidas nos áudios gerados (Higgsfield, ElevenLabs, voz "Andre").
+// Durações medidas nos áudios (voz gerada no Cartesia, cortada da gravação por pausas).
 export const VOZ: Fala[] = [
-  { arquivo: "gancho-dor", de: 3, frames: 81, gancho: "dor" },
-  { arquivo: "gancho-pergunta", de: 3, frames: 86, gancho: "pergunta" },
-  { arquivo: "dor", de: 94, frames: 82 }, // a pausa do "..." cai perto da troca de título (frame 135)
-  { arquivo: "dado", de: 190, frames: 77 }, // termina antes do swoosh (frame 270)
-  { arquivo: "virada", de: 280, frames: 88 },
-  { arquivo: "demo-1", de: 381, frames: 89 }, // junto com a pílula "Respondeu em 3 segundos"
-  { arquivo: "demo-2", de: 481, frames: 79 }, // junto com "Horários reais da agenda"
-  { arquivo: "demo-3", de: 592, frames: 74 }, // logo depois do som de sucesso (frame 585)
-  { arquivo: "beneficios", de: 672, frames: 74 },
-  { arquivo: "cta", de: 776, frames: 111 }, // termina no frame 887 (o vídeo tem 900)
+  // Ainda sem arquivo com a voz nova: a versão Dor fica sem a fala do gancho.
+  { arquivo: "gancho-dor", de: 3, frames: 70, gancho: "dor" },
+  { arquivo: "gancho-pergunta", de: 3, frames: 68, gancho: "pergunta" },
+  { arquivo: "dor", de: 104, frames: 85 }, // "o paciente já marcou" cai na troca de título (frame 135)
+  { arquivo: "dado", de: 194, frames: 65 }, // termina antes do swoosh (frame 270)
+  { arquivo: "virada", de: 280, frames: 74 },
+  { arquivo: "demo-1", de: 381, frames: 63 }, // junto com a pílula "Respondeu em 3 segundos"
+  { arquivo: "demo-2", de: 481, frames: 70 }, // junto com "Horários reais da agenda"
+  { arquivo: "demo-3", de: 592, frames: 45 }, // logo depois do som de sucesso (frame 585)
+  { arquivo: "beneficios", de: 672, frames: 57 },
+  { arquivo: "cta", de: 778, frames: 83 }, // "Toque em enviar mensagem" entra depois da chamada (frame 799)
 ];
 
 // Cena 7: relativo a SCENES.cta

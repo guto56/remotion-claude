@@ -19,7 +19,7 @@ Projeto Remotion do anúncio da Corso Automação (veja README.md). Use as skill
 ## Áudio
 
 - Música e efeitos em `public/*.mp3`, sintetizados por `scripts/sintetizar-audio.py` (numpy + scipy).
-- Locução em `public/voz/<id>.mp3`, gerada no Higgsfield com `text2speech_v2` variante `elevenlabs`, voz "Andre" (preset `f1e8226e-2248-4d5f-b43c-0a79e9949dbf`). Não use `seed_audio` para português: as vozes preset têm base em inglês e saem com sotaque americano. Os arquivos gerados ficam em `d8j0ntlcm91z4.cloudfront.net` (precisa estar liberado na rede do ambiente). Processar com `scripts/preparar-voz.py <pasta>` e atualizar `VOZ` em `timing.ts` com as durações.
+- Locução em `public/voz/<id>.mp3`, voz gerada pelo usuário no Cartesia (uma tomada só, cortada nas pausas e processada com `scripts/preparar-voz.py <pasta>`; depois atualize `VOZ` em `timing.ts` com as durações). Falta `gancho-dor` com essa voz. Vozes preset do Higgsfield com `seed_audio` saem com sotaque americano em português; se precisar gerar lá, use `text2speech_v2` com `elevenlabs` (resultados em `d8j0ntlcm91z4.cloudfront.net`, que precisa estar liberado na rede).
 - Evite reticências no começo do texto de uma fala: o modelo solta um "e" isolado e acelera o resto.
 - Mixagem em `src/anuncio/AdAudio.tsx`. Pico da mixagem final deve ficar abaixo de -1 dBFS.
 

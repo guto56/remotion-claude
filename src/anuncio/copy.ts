@@ -112,7 +112,7 @@ export const copy = {
   locucao: {
     "gancho-dor": "Seu paciente te chamou às onze da noite.",
     "gancho-pergunta": "Quanto tempo sua clínica demora pra responder?",
-    dor: "De manhã... ele já marcou na concorrente.",
+    dor: "De manhã... o paciente já marcou na concorrente.",
     dado: "Cinco minutos fazem toda a diferença.",
     virada: "E se sua clínica respondesse em três segundos?",
     "demo-1": "Ela responde na hora, a qualquer hora.",

@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Prepara as falas da locução baixadas do Higgsfield.
 
-Para cada <pasta>/<id>.mp3 (id = chave de `locucao` em copy.ts):
+Para cada <pasta>/<id>.mp3 ou .wav (id = chave de `locucao` em copy.ts):
   - corta o silêncio do começo e do fim;
   - deixa todas as falas no mesmo volume (RMS da voz em -17 dBFS, pico <= -1,5 dBFS);
   - grava public/voz/<id>.mp3 e mostra a duração em frames (para timing.ts, VOZ).
@@ -79,7 +79,8 @@ def process(x):
 if __name__ == "__main__":
     folder = sys.argv[1]
     os.makedirs(OUT, exist_ok=True)
-    for path in sorted(glob.glob(os.path.join(folder, "*.mp3"))):
+    paths = glob.glob(os.path.join(folder, "*.mp3")) + glob.glob(os.path.join(folder, "*.wav"))
+    for path in sorted(paths):
         name = os.path.splitext(os.path.basename(path))[0]
         raw = read(path)
         clean, gain_db = process(raw)
