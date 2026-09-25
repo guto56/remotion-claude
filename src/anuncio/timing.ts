@@ -112,7 +112,7 @@ export const VOZ: Fala[] = [
   { arquivo: "virada", de: 283, frames: 90 },
   { arquivo: "demo-1", de: 381, frames: 89 }, // junto com a pílula "Respondeu em 3 segundos"
   { arquivo: "demo-2", de: 480, frames: 71 }, // junto com "Horários reais da agenda"
-  { arquivo: "demo-3", de: 592, frames: 64 }, // logo depois de "Agendou sozinha" e do som de sucesso
+  { arquivo: "demo-3", de: 598, frames: 64 }, // depois do som de sucesso (frame 587)
   { arquivo: "beneficios", de: 668, frames: 65 },
   { arquivo: "cta", de: 778, frames: 90 },
 ];

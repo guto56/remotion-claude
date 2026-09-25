@@ -85,7 +85,8 @@ export const AdAudio: React.FC<{ gancho: "dor" | "pergunta" }> = ({ gancho }) =>
       ) : null}
 
       {/* Efeitos */}
-      {sfx(ping, pings, "ping")}
+      {/* pings mais baixos: tocam junto com a fala do gancho */}
+      {sfx(ping, pings, "ping", 0.3)}
       {sfx(relogio, [SCENES.dor + DOR.relogioInicio], "relogio", 0.5)}
       {sfx(impacto, [SCENES.dado + DADO.contagemFim], "impacto", 0.3)}
       {sfx(swoosh, [SCENES.virada], "swoosh")}
