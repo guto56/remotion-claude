@@ -103,18 +103,18 @@ export type Fala = {
   gancho?: "dor" | "pergunta";
 };
 
-// Durações medidas nos áudios gerados (voz "Andre", Higgsfield Seed Audio).
+// Durações medidas nos áudios gerados (Higgsfield, ElevenLabs, voz "Andre").
 export const VOZ: Fala[] = [
-  { arquivo: "gancho-dor", de: 3, frames: 74, gancho: "dor" },
-  { arquivo: "gancho-pergunta", de: 3, frames: 78, gancho: "pergunta" },
-  { arquivo: "dor", de: 84, frames: 103 }, // a pausa do "..." cai na troca de título (frame 135)
-  { arquivo: "dado", de: 190, frames: 87 },
-  { arquivo: "virada", de: 283, frames: 90 },
+  { arquivo: "gancho-dor", de: 3, frames: 81, gancho: "dor" },
+  { arquivo: "gancho-pergunta", de: 3, frames: 86, gancho: "pergunta" },
+  { arquivo: "dor", de: 94, frames: 82 }, // a pausa do "..." cai perto da troca de título (frame 135)
+  { arquivo: "dado", de: 190, frames: 77 }, // termina antes do swoosh (frame 270)
+  { arquivo: "virada", de: 280, frames: 88 },
   { arquivo: "demo-1", de: 381, frames: 89 }, // junto com a pílula "Respondeu em 3 segundos"
-  { arquivo: "demo-2", de: 480, frames: 71 }, // junto com "Horários reais da agenda"
-  { arquivo: "demo-3", de: 598, frames: 64 }, // depois do som de sucesso (frame 587)
-  { arquivo: "beneficios", de: 668, frames: 65 },
-  { arquivo: "cta", de: 778, frames: 90 },
+  { arquivo: "demo-2", de: 481, frames: 79 }, // junto com "Horários reais da agenda"
+  { arquivo: "demo-3", de: 592, frames: 74 }, // logo depois do som de sucesso (frame 585)
+  { arquivo: "beneficios", de: 672, frames: 74 },
+  { arquivo: "cta", de: 776, frames: 111 }, // termina no frame 887 (o vídeo tem 900)
 ];
 
 // Cena 7: relativo a SCENES.cta

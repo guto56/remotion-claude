@@ -91,7 +91,8 @@ export const AdAudio: React.FC<{ gancho: "dor" | "pergunta" }> = ({ gancho }) =>
       {sfx(impacto, [SCENES.dado + DADO.contagemFim], "impacto", 0.3)}
       {sfx(swoosh, [SCENES.virada], "swoosh")}
       {sfx(pop, pops, "pop")}
-      {sfx(sucesso, [confirmacao + 2], "sucesso", 0.5)}
+      {/* sucesso junto com a mensagem de confirmação, antes da fala "E agenda..." */}
+      {sfx(sucesso, [confirmacao], "sucesso", 0.35)}
       {sfx(swoosh, [SCENES.cta], "swoosh-cta", 0.35)}
 
       {/* Locução */}
