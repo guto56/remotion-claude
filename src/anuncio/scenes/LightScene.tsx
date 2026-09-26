@@ -7,6 +7,7 @@ import {
   useCurrentFrame,
   useVideoConfig,
 } from "remotion";
+import { CALENDAR, CalendarCard3D } from "../components/CalendarCard3D";
 import { ChatScreen } from "../components/ChatScreen";
 import { ChecklistItem } from "../components/ChecklistItem";
 import { FloatingChip } from "../components/FloatingChip";
@@ -14,9 +15,9 @@ import { KineticHeadline } from "../components/KineticHeadline";
 import { PhoneFrame } from "../components/PhoneFrame";
 import { copy } from "../copy";
 import { PHONE, type Layout } from "../layout";
-import { clamped, enter, slowZoom } from "../lib/motion";
+import { clamped, enter, fadeFrom, slowZoom } from "../lib/motion";
 import { colors } from "../theme";
-import { BENEFICIOS, DEMO, MOTION, SCENES, VIRADA } from "../timing";
+import { AGENDA, BENEFICIOS, DEMO, MOTION, SCENES, VIRADA } from "../timing";
 
 // Cenas 4 (virada), 5 (demonstração) e 6 (benefícios): mesmo fundo claro,
 // o título da 4 dá lugar ao celular, que depois sai para a esquerda.
@@ -49,6 +50,26 @@ export const LightScene: React.FC<{ layout: Layout }> = ({ layout }) => {
   );
   const phoneScale = layout.demo.phoneScale * slowZoom(frame, demoAt, benAt);
   const enterDistance = layout.height - layout.demo.phoneTop + 80;
+
+  // --- Cena 5: agenda 3D ---
+  // Na mensagem 4 o celular vai para a esquerda e gira; a agenda entra pela direita.
+  // Antes da cena 6 a agenda sai e o celular volta ao normal.
+  const PHONE_SHIFT = -140; // px
+  const PHONE_TILT = 8; // graus (rotateY)
+  const t = frame - demoAt; // frame relativo à cena 5
+  const calIn = enter(frame, fps, demoAt + AGENDA.entra);
+  const calOut = interpolate(t, [AGENDA.sai, AGENDA.sai + AGENDA.saiFrames], [0, 1], {
+    ...clamped,
+    easing: Easing.in(Easing.cubic),
+  });
+  const phoneBack = enter(frame, fps, demoAt + AGENDA.sai);
+  const side3d = t >= AGENDA.entra ? calIn * (1 - phoneBack) : 0;
+  const calW = CALENDAR.width * layout.demo.calendarScale;
+  const calH = CALENDAR.height * layout.demo.calendarScale;
+  const phoneRight =
+    layout.width / 2 + PHONE_SHIFT + (PHONE.width * layout.demo.phoneScale) / 2;
+  // Sobrepõe ~20% ao celular, sem passar da margem lateral (folga para a perspectiva)
+  const calLeft = Math.min(phoneRight - 0.2 * calW, layout.width - side - 12 - calW);
 
   // Pílulas: entram junto com a mensagem indicada em timing.ts
   const chipAt = (index: number) => demoAt + DEMO.mensagens[index];
@@ -93,12 +114,40 @@ export const LightScene: React.FC<{ layout: Layout }> = ({ layout }) => {
             width: PHONE.width,
             height: PHONE.height,
             scale: phoneScale,
-            translate: `${-phoneOut * layout.width}px ${(1 - phoneIn) * enterDistance}px`,
+            translate: `${-phoneOut * layout.width + PHONE_SHIFT * side3d}px ${(1 - phoneIn) * enterDistance}px`,
+            transform: `perspective(1400px) rotateY(${PHONE_TILT * side3d}deg)`,
           }}
         >
           <PhoneFrame screen={colors.chatBackground}>
             <ChatScreen t={frame - demoAt} />
           </PhoneFrame>
+        </div>
+      ) : null}
+
+      {/* Cena 5: agenda 3D ao lado do celular */}
+      {t >= AGENDA.entra - 1 && calOut < 1 ? (
+        <div
+          style={{
+            position: "absolute",
+            left: calLeft,
+            top: layout.demo.calendarCenterY - calH / 2,
+            width: calW,
+            height: calH,
+            opacity: fadeFrom(calIn) * (1 - calOut),
+            translate: `${(1 - calIn) * 600 + calOut * 600}px 0px`,
+          }}
+        >
+          <div
+            style={{
+              width: CALENDAR.width,
+              height: CALENDAR.height,
+              scale: layout.demo.calendarScale,
+              transformOrigin: "top left",
+              perspective: 1400,
+            }}
+          >
+            <CalendarCard3D t={t} />
+          </div>
         </div>
       ) : null}
 

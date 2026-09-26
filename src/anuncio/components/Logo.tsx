@@ -41,7 +41,7 @@ export const Logo: React.FC<{ size: number; avatar?: boolean }> = ({
           height: size,
           borderRadius: size / 2,
           background: colors.white,
-          border: `2px solid ${colors.patientBorder}`,
+          border: `2px solid ${colors.clientBorder}`,
           overflow: "hidden",
           display: "flex",
           alignItems: "center",

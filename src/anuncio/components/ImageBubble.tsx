@@ -1,4 +1,4 @@
-import { Smile } from "lucide-react";
+import { Store } from "lucide-react";
 import React from "react";
 import { colors, fonts } from "../theme";
 import { ChatBubble } from "./ChatBubble";
@@ -51,7 +51,7 @@ export const ImageBubble: React.FC<{
           background: "rgba(255,255,255,0.10)",
         }}
       />
-      <Smile size={44} strokeWidth={2.2} />
+      <Store size={44} strokeWidth={2.2} />
       <div style={{ fontFamily: fonts.title, fontWeight: 800, fontSize: 38 }}>
         {title}
       </div>

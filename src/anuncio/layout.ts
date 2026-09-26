@@ -40,7 +40,13 @@ export type Layout = {
     shrinkTo: number; // cena 2: celular diminui para 80%
     bubbleTop: number; // balão "sem resposta" da cena 2
   };
-  demo: { phoneTop: number; phoneScale: number; chipTop: number };
+  demo: {
+    phoneTop: number;
+    phoneScale: number;
+    chipTop: number;
+    calendarScale: number; // CalendarCard3D (1 = 420x840)
+    calendarCenterY: number;
+  };
   benefits: { titleTop: number; listTop: number };
   cta: {
     logoTop: number;
@@ -62,7 +68,7 @@ const reels: Layout = {
   night: { phoneTop: 560, phoneScale: 1, shrinkTo: 0.8, bubbleTop: 1112 },
   // A parte de baixo do celular (campo de digitar) entra na faixa coberta:
   // é só decoração, as mensagens terminam antes de y=1240.
-  demo: { phoneTop: 364, phoneScale: 1, chipTop: 264 },
+  demo: { phoneTop: 364, phoneScale: 1, chipTop: 264, calendarScale: 1, calendarCenterY: 790 },
   benefits: { titleTop: 276, listTop: 650 },
   cta: {
     logoTop: 290,
@@ -83,7 +89,7 @@ const feed: Layout = {
   headlineTop: 72,
   headlineSize: 76,
   night: { phoneTop: 340, phoneScale: 0.9, shrinkTo: 0.8, bubbleTop: 838 },
-  demo: { phoneTop: 170, phoneScale: 0.95, chipTop: 70 },
+  demo: { phoneTop: 170, phoneScale: 0.95, chipTop: 70, calendarScale: 0.8, calendarCenterY: 650 },
   benefits: { titleTop: 300, listTop: 570 }, // centralizado (sem celular)
   cta: {
     logoTop: 120,

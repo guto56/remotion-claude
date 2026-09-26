@@ -73,7 +73,7 @@ export const NightScene: React.FC<{
   const moon = interpolate(night, [0.35, 0.6], [1, 0], clamped);
   const sun = interpolate(night, [0.45, 0.7], [0, 1], clamped);
 
-  // --- Balão do paciente sem resposta ---
+  // --- Balão do cliente sem resposta ---
   const bubble = enter(frame, fps, dorAt + DOR.mensagem);
 
   const headline = (
@@ -248,7 +248,7 @@ export const NightScene: React.FC<{
         </PhoneFrame>
       </div>
 
-      {/* Balão do paciente: visualizado, sem resposta */}
+      {/* Balão do cliente: visualizado, sem resposta */}
       {d >= DOR.mensagem - 1 ? (
         <div
           style={{
@@ -266,7 +266,7 @@ export const NightScene: React.FC<{
           <div style={{ display: "flex", flexDirection: "column" }}>
             <ChatBubble
               direction="out"
-              text={copy.dor.mensagemPaciente}
+              text={copy.dor.mensagemCliente}
               time={copy.dor.horaMensagem}
               ticks="gray"
               maxWidth={layout.width - side * 2}

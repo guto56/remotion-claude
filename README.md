@@ -1,11 +1,11 @@
 # Anúncio Corso Automação (Remotion)
 
-Vídeo de anúncio para Reels/Feed com 3 composições:
+Anúncio da assistente de IA para WhatsApp de negócios (clínicas, studios, salões, lojas, prestadores de serviço). 3 composições:
 
 | Composição | Formato | O que muda |
 | --- | --- | --- |
-| `Anuncio-Dor` | 1080x1920, 30 s | gancho "Seu paciente chamou às 23h." |
-| `Anuncio-Pergunta` | 1080x1920, 30 s | gancho "Quanto tempo sua clínica demora pra responder?" |
+| `Anuncio-Dor` | 1080x1920, 30 s | gancho "Seu cliente chamou às 23h." |
+| `Anuncio-Pergunta` | 1080x1920, 30 s | gancho "Quanto tempo seu negócio demora pra responder?" |
 | `Anuncio-Feed` | 1080x1350 (4:5), 30 s | gancho em pergunta, celular menor e textos acima |
 
 ## Rodar
@@ -32,6 +32,7 @@ Tudo em `src/anuncio/`:
 - **Tempos**: `timing.ts`. `SCENES` tem o frame em que cada cena começa (30 frames = 1 s); os outros blocos têm os tempos de dentro de cada cena, contados a partir do início dela. É ali que ficam os momentos de cada mensagem do chat (`DEMO.mensagens`).
 - **Posições** (Reels x Feed): `layout.ts`.
 - **Ícones das pílulas** (Zap, CalendarDays, CheckCircle2): `scenes/LightScene.tsx`.
+- **Agenda 3D** (Cena 5): dias, horários livres, blocos ocupados e o evento em `copy.ts` (`chat.agenda`); tempos em `timing.ts` (`AGENDA`); tamanho e posição por formato em `layout.ts` (`demo.calendarScale`, `demo.calendarCenterY`).
 
 ## Arquivos em `public/`
 

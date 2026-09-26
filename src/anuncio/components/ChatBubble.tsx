@@ -7,7 +7,7 @@ export type Ticks = "none" | "gray" | "read";
 
 // Balão de conversa.
 //   direction "in"  = assistente (esquerda, menta)
-//   direction "out" = paciente   (direita, branco com borda)
+//   direction "out" = cliente    (direita, branco com borda)
 export const ChatBubble: React.FC<{
   direction: "in" | "out";
   text: string; // aceita *negrito* e \n
@@ -41,11 +41,11 @@ export const ChatBubble: React.FC<{
         alignSelf: isOut ? "flex-end" : "flex-start",
         width,
         maxWidth,
-        background: isOut ? colors.patientBubble : colors.mint,
+        background: isOut ? colors.clientBubble : colors.mint,
         border: confirm
           ? `3px solid ${colors.brand}`
           : isOut
-            ? `2px solid ${colors.patientBorder}`
+            ? `2px solid ${colors.clientBorder}`
             : "2px solid transparent",
         borderRadius: radius.bubble,
         [isOut ? "borderBottomRightRadius" : "borderBottomLeftRadius"]: 8,

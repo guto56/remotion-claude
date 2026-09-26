@@ -6,15 +6,15 @@ import { fontFamilies } from "./fonts";
 
 export const colors = {
   brand: "#0F766E", // verde marca
-  brandLight: "#14B8A6", // fim do degradê do banner da clínica
+  brandLight: "#14B8A6", // fim do degradê do banner da empresa
   night: "#0B1F1D", // verde escuro (fundo noturno)
   mint: "#DCF5EE", // balão enviado pela assistente
   light: "#F5FBF9", // fundo claro
   white: "#FFFFFF",
   text: "#111827", // texto escuro
   textMuted: "#6B7280", // cinza texto secundário
-  patientBubble: "#FFFFFF", // balão do paciente
-  patientBorder: "#E5E7EB", // borda do balão do paciente
+  clientBubble: "#FFFFFF", // balão do cliente
+  clientBorder: "#E5E7EB", // borda do balão do cliente
   yellow: "#FFD400", // destaque
   red: "#EF4444", // dor / badge
   chatBackground: "#EAF2EF", // fundo da conversa dentro do celular

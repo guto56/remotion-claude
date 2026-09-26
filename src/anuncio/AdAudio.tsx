@@ -3,7 +3,7 @@ import React from "react";
 import { interpolate, Sequence } from "remotion";
 import { clamped } from "./lib/motion";
 import { optionalStaticFile } from "./lib/static";
-import { DADO, DEMO, DOR, GANCHO, SCENES, VOZ } from "./timing";
+import { AGENDA, DADO, DEMO, DOR, GANCHO, SCENES, VOZ } from "./timing";
 
 // Volumes
 const MUSIC_VOLUME = 0.15;
@@ -92,6 +92,8 @@ export const AdAudio: React.FC<{ gancho: "dor" | "pergunta" }> = ({ gancho }) =>
       {sfx(impacto, [SCENES.dado + DADO.contagemFim], "impacto", 0.3)}
       {sfx(swoosh, [SCENES.virada], "swoosh")}
       {sfx(pop, pops, "pop")}
+      {/* pop quando o evento é criado na agenda 3D */}
+      {sfx(pop, [SCENES.demo + AGENDA.evento], "pop-agenda")}
       {/* sucesso junto com a mensagem de confirmação, antes da fala "E agenda..." */}
       {sfx(sucesso, [confirmacao], "sucesso", 0.35)}
       {sfx(swoosh, [SCENES.cta], "swoosh-cta", 0.35)}

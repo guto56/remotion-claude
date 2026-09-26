@@ -1,6 +1,6 @@
 # remotion-claude
 
-Projeto Remotion do anúncio da Corso Automação (veja README.md). Use as skills em `.claude/skills/` (comece por `remotion-best-practices`).
+Projeto Remotion do anúncio da Corso Automação, assistente de IA para WhatsApp de negócios em geral (veja README.md). Use as skills em `.claude/skills/` (comece por `remotion-best-practices`).
 
 ## Comandos
 
@@ -14,12 +14,12 @@ Projeto Remotion do anúncio da Corso Automação (veja README.md). Use as skill
 - `src/Root.tsx`: registra `Anuncio-Dor`, `Anuncio-Pergunta`, `Anuncio-Feed`
 - `src/anuncio/copy.ts` (textos), `theme.ts` (cores/fontes), `timing.ts` (frames), `layout.ts` (posições por formato)
 - `src/anuncio/scenes/`: `NightScene` (cenas 1-2), `StatScene` (3), `LightScene` (4-6), `CtaScene` (7)
-- `src/anuncio/components/`: componentes visuais reutilizáveis
+- `src/anuncio/components/`: componentes visuais reutilizáveis (inclui `CalendarCard3D`, a agenda 3D da Cena 5)
 
 ## Áudio
 
 - Música e efeitos em `public/*.mp3`, sintetizados por `scripts/sintetizar-audio.py` (numpy + scipy).
-- Locução em `public/voz/<id>.mp3`, voz gerada pelo usuário no Cartesia (uma tomada só, cortada nas pausas e processada com `scripts/preparar-voz.py <pasta>`; depois atualize `VOZ` em `timing.ts` com as durações). Falta `gancho-dor` com essa voz. Vozes preset do Higgsfield com `seed_audio` saem com sotaque americano em português; se precisar gerar lá, use `text2speech_v2` com `elevenlabs` (resultados em `d8j0ntlcm91z4.cloudfront.net`, que precisa estar liberado na rede).
+- Locução em `public/voz/<id>.mp3`, voz gerada pelo usuário no Cartesia (uma tomada só, cortada nas pausas e processada com `scripts/preparar-voz.py <pasta>`; depois atualize `VOZ` em `timing.ts` com as durações). Falta `gancho-dor` com essa voz. A gravação ainda fala "clínica"/"paciente", enquanto a tela é genérica ("negócio"/"cliente"). Vozes preset do Higgsfield com `seed_audio` saem com sotaque americano em português; se precisar gerar lá, use `text2speech_v2` com `elevenlabs` (resultados em `d8j0ntlcm91z4.cloudfront.net`, que precisa estar liberado na rede).
 - Evite reticências no começo do texto de uma fala: o modelo solta um "e" isolado e acelera o resto.
 - Mixagem em `src/anuncio/AdAudio.tsx`. Pico da mixagem final deve ficar abaixo de -1 dBFS.
 

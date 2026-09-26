@@ -74,7 +74,7 @@ export const ChatScreen: React.FC<{ t: number }> = ({ t }) => {
       easing: Easing.out(Easing.cubic),
     });
     const p = enter(t, fps, a);
-    const isOut = m.de === "paciente";
+    const isOut = m.de === "cliente";
     const glow =
       m.tipo === "confirmacao"
         ? interpolate(
@@ -152,7 +152,7 @@ export const ChatScreen: React.FC<{ t: number }> = ({ t }) => {
     <>
       <StatusBar time={clock} color={colors.text} />
       <ChatHeader
-        name={copy.chat.nomeClinica}
+        name={copy.chat.nomeEmpresa}
         status={copy.chat.status}
         accessory={timer}
         accessoryIn={fadeFrom(timerIn)}

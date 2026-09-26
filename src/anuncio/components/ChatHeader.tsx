@@ -24,7 +24,7 @@ export const ChatHeader: React.FC<{
       gap: 10,
       padding: "0 20px 0 8px",
       background: colors.white,
-      borderBottom: `1px solid ${colors.patientBorder}`,
+      borderBottom: `1px solid ${colors.clientBorder}`,
       fontFamily: fonts.ui,
       zIndex: 1,
     }}

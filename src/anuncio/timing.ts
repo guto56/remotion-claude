@@ -53,7 +53,7 @@ export const DOR = {
   encolhe: 0, // celular vai para 80% e notificações ficam cinza
   relogioInicio: 4, // relógio 23:41 -> 08:30
   relogioFim: 48,
-  mensagem: 30, // balão do paciente sem resposta
+  mensagem: 30, // balão do cliente sem resposta
   titulo1: 15, // "Quando você responde de manhã..."
   titulo1Sai: 52,
   titulo2: 60, // "...ele já marcou na concorrente."
@@ -85,6 +85,17 @@ export const DEMO = {
   brilhoConfirmacao: 292, // pulso na borda do balão de confirmação
 };
 
+// Agenda 3D (CalendarCard3D) na Cena 5: relativo a SCENES.demo
+export const AGENDA = {
+  entra: 164, // = mensagem 4 (horários): celular vai à esquerda, agenda entra pela direita
+  acende: 176, // 1º horário livre acende; os outros vêm a cada `acendeACada`
+  acendeACada: 6,
+  evento: 276, // bloco "Maria · 09:00" é criado (mensagem 6 = 270)
+  check: 290, // círculo com check no canto do bloco
+  sai: 318, // agenda sai pela direita (10 frames) e o celular volta ao normal
+  saiFrames: 10,
+};
+
 // Cena 6: relativo a SCENES.beneficios
 export const BENEFICIOS = {
   celularSai: 0,
@@ -108,7 +119,7 @@ export const VOZ: Fala[] = [
   // Ainda sem arquivo com a voz nova: a versão Dor fica sem a fala do gancho.
   { arquivo: "gancho-dor", de: 3, frames: 70, gancho: "dor" },
   { arquivo: "gancho-pergunta", de: 3, frames: 68, gancho: "pergunta" },
-  { arquivo: "dor", de: 104, frames: 85 }, // "o paciente já marcou" cai na troca de título (frame 135)
+  { arquivo: "dor", de: 104, frames: 85 }, // a 2ª metade da fala cai na troca de título (frame 135)
   { arquivo: "dado", de: 194, frames: 65 }, // termina antes do swoosh (frame 270)
   { arquivo: "virada", de: 280, frames: 74 },
   { arquivo: "demo-1", de: 381, frames: 63 }, // junto com a pílula "Respondeu em 3 segundos"
