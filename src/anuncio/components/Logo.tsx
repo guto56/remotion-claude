@@ -34,10 +34,24 @@ export const Logo: React.FC<{ size: number; avatar?: boolean }> = ({
     );
   }
 
+  // A logo é verde, como o fundo da cena final: fica dentro de um círculo branco
   return (
-    <Img
-      src={src}
-      style={{ height: size, maxWidth: size * 3.5, objectFit: "contain" }}
-    />
+    <div
+      style={{
+        width: size,
+        height: size,
+        borderRadius: size / 2,
+        background: colors.white,
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        flexShrink: 0,
+      }}
+    >
+      <Img
+        src={src}
+        style={{ width: "66%", height: "66%", objectFit: "contain" }}
+      />
+    </div>
   );
 };
