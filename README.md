@@ -38,7 +38,7 @@ Tudo em `src/anuncio/`:
 
 Todos são opcionais: se faltarem, o vídeo renderiza mesmo assim.
 
-- `logo.png`: logo da Corso (no avatar do chat e na chamada final). Sem ela aparecem as iniciais "CA".
+- `logo.png`: logo da Corso, usada só na chamada final (cena 7). Sem ela aparecem as iniciais "CA". O avatar do chat usa sempre as iniciais.
 - Música e efeitos: `music.mp3` (volume 0.15, com fade, abaixa durante a locução), `ping.mp3`, `pop.mp3`, `swoosh.mp3`, `relogio.mp3`, `impacto.mp3`, `sucesso.mp3`. Foram sintetizados por `scripts/sintetizar-audio.py` (sem direitos autorais). Para trocar um som, substitua o arquivo mantendo o nome.
 - Locução: `voz/<id>.mp3`, gerada no Cartesia (português do Brasil). Textos em `copy.ts` (`locucao`), momentos e durações em `timing.ts` (`VOZ`). Para trocar falas: salve os áudios numa pasta com o nome de cada fala (ex.: `cta.mp3` ou `.wav`) e rode `python3 scripts/preparar-voz.py <pasta>` (corta o silêncio, iguala o volume e mostra a duração para atualizar `VOZ`).
 

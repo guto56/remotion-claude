@@ -47,7 +47,7 @@ export type Layout = {
     calendarScale: number; // CalendarCard3D (1 = 420x840)
     calendarCenterY: number;
   };
-  benefits: { titleTop: number; listTop: number };
+  benefits: { gap: number }; // espaço entre título e checklist (o bloco é centralizado)
   cta: {
     logoTop: number;
     nameTop: number;
@@ -69,13 +69,13 @@ const reels: Layout = {
   // A parte de baixo do celular (campo de digitar) entra na faixa coberta:
   // é só decoração, as mensagens terminam antes de y=1240.
   demo: { phoneTop: 364, phoneScale: 1, chipTop: 264, calendarScale: 1, calendarCenterY: 790 },
-  benefits: { titleTop: 276, listTop: 650 },
+  benefits: { gap: 80 },
   cta: {
     logoTop: 290,
     nameTop: 486,
     titleTop: 580,
     lineTop: 800,
-    subTop: 950,
+    subTop: 1005, // chamada em 3 linhas termina em y≈987
     arrowTop: 1090, // centro da seta em y≈1150
   },
 };
@@ -90,13 +90,13 @@ const feed: Layout = {
   headlineSize: 76,
   night: { phoneTop: 340, phoneScale: 0.9, shrinkTo: 0.8, bubbleTop: 838 },
   demo: { phoneTop: 170, phoneScale: 0.95, chipTop: 70, calendarScale: 0.8, calendarCenterY: 650 },
-  benefits: { titleTop: 300, listTop: 570 }, // centralizado (sem celular)
+  benefits: { gap: 64 },
   cta: {
     logoTop: 120,
     nameTop: 316,
     titleTop: 410,
     lineTop: 630,
-    subTop: 780,
+    subTop: 835,
     arrowTop: 1040,
   },
 };

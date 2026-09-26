@@ -7,7 +7,7 @@ import { MOTION } from "../timing";
 import { HighlightWord } from "./HighlightWord";
 
 type Props = {
-  text: string; // aceita [destaque]
+  text: string; // aceita [destaque] e \n (quebra de linha forçada)
   start: number; // frame em que a primeira palavra começa a entrar
   exitAt?: number; // frame em que o título começa a sair (8 frames)
   tone: "dark" | "light"; // dark = fundo escuro (branco + amarelo)
@@ -18,6 +18,7 @@ type Props = {
   highlightColor?: string; // sobrescreve a cor do destaque
   shake?: boolean; // treme a palavra destacada ao entrar
   exitShift?: number; // quanto sobe ao sair (px)
+  entrance?: boolean; // false = já aparece completo (sem entrar palavra por palavra)
   style?: React.CSSProperties;
 };
 
@@ -34,12 +35,13 @@ export const KineticHeadline: React.FC<Props> = ({
   highlightColor,
   shake = false,
   exitShift = 24,
+  entrance = true,
   style,
 }) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
   const colors = headlineTones[tone];
-  const words = parseHighlight(text);
+  const lines = text.split("\n").map(parseHighlight);
   const out = exit(frame, exitAt);
 
   return (
@@ -55,34 +57,43 @@ export const KineticHeadline: React.FC<Props> = ({
         ...style,
       }}
     >
-      {words.map((runs, i) => {
-        const wordStart = start + i * MOTION.wordStagger;
-        const p = enter(frame, fps, wordStart);
+      {lines.map((words, l) => {
+        // índice da primeira palavra da linha, para o stagger continuar entre linhas
+        const offset = lines.slice(0, l).reduce((n, w) => n + w.length, 0);
         return (
-          <React.Fragment key={i}>
-            {i > 0 ? " " : null}
-            <span
-              style={{
-                display: "inline-block",
-                opacity: fadeFrom(p) * out,
-                translate: `0px ${(1 - p) * 30 - (1 - out) * exitShift}px`,
-              }}
-            >
-              {runs.map((run, j) =>
-                run.on ? (
-                  <HighlightWord
-                    key={j}
-                    color={highlightColor ?? colors.highlight}
-                    shakeFrom={shake ? wordStart : undefined}
+          <div key={l}>
+            {words.map((runs, k) => {
+              const i = offset + k;
+              const wordStart = start + i * MOTION.wordStagger;
+              const p = entrance ? enter(frame, fps, wordStart) : 1;
+              return (
+                <React.Fragment key={i}>
+                  {k > 0 ? " " : null}
+                  <span
+                    style={{
+                      display: "inline-block",
+                      opacity: fadeFrom(p) * out,
+                      translate: `0px ${(1 - p) * 30 - (1 - out) * exitShift}px`,
+                    }}
                   >
-                    {run.text}
-                  </HighlightWord>
-                ) : (
-                  <span key={j}>{run.text}</span>
-                ),
-              )}
-            </span>
-          </React.Fragment>
+                    {runs.map((run, j) =>
+                      run.on ? (
+                        <HighlightWord
+                          key={j}
+                          color={highlightColor ?? colors.highlight}
+                          shakeFrom={shake && entrance ? wordStart : undefined}
+                        >
+                          {run.text}
+                        </HighlightWord>
+                      ) : (
+                        <span key={j}>{run.text}</span>
+                      ),
+                    )}
+                  </span>
+                </React.Fragment>
+              );
+            })}
+          </div>
         );
       })}
     </div>

@@ -3,12 +3,13 @@ import { Img } from "remotion";
 import { optionalStaticFile } from "../lib/static";
 import { colors, fonts } from "../theme";
 
-// Logo de public/logo.png. Se o arquivo não existir, mostra as iniciais "CA".
+// Logo de public/logo.png, usada só na cena final. O avatar do chat (`avatar`)
+// mostra sempre as iniciais "CA"; sem o arquivo, a cena final também mostra "CA".
 export const Logo: React.FC<{ size: number; avatar?: boolean }> = ({
   size,
   avatar = false,
 }) => {
-  const src = optionalStaticFile("logo.png");
+  const src = avatar ? null : optionalStaticFile("logo.png");
 
   if (!src) {
     return (
@@ -29,30 +30,6 @@ export const Logo: React.FC<{ size: number; avatar?: boolean }> = ({
         }}
       >
         CA
-      </div>
-    );
-  }
-
-  if (avatar) {
-    return (
-      <div
-        style={{
-          width: size,
-          height: size,
-          borderRadius: size / 2,
-          background: colors.white,
-          border: `2px solid ${colors.clientBorder}`,
-          overflow: "hidden",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          flexShrink: 0,
-        }}
-      >
-        <Img
-          src={src}
-          style={{ width: "80%", height: "80%", objectFit: "contain" }}
-        />
       </div>
     );
   }

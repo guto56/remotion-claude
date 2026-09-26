@@ -51,7 +51,7 @@ export const ChecklistItem: React.FC<{
           fontSize: type.checklist,
           lineHeight: 1.2,
           color: colors.text,
-          paddingTop: 5,
+          paddingTop: 0, // 1ª linha (56 px) alinhada ao círculo
         }}
       >
         {text}

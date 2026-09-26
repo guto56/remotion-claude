@@ -58,10 +58,15 @@ export const LightScene: React.FC<{ layout: Layout }> = ({ layout }) => {
   const PHONE_TILT = 8; // graus (rotateY)
   const t = frame - demoAt; // frame relativo à cena 5
   const calIn = enter(frame, fps, demoAt + AGENDA.entra);
-  const calOut = interpolate(t, [AGENDA.sai, AGENDA.sai + AGENDA.saiFrames], [0, 1], {
-    ...clamped,
-    easing: Easing.in(Easing.cubic),
-  });
+  const calOut = interpolate(
+    t,
+    [AGENDA.sai, AGENDA.sai + AGENDA.saiFrames],
+    [0, 1],
+    {
+      ...clamped,
+      easing: Easing.in(Easing.cubic),
+    },
+  );
   const phoneBack = enter(frame, fps, demoAt + AGENDA.sai);
   const side3d = t >= AGENDA.entra ? calIn * (1 - phoneBack) : 0;
   const calW = CALENDAR.width * layout.demo.calendarScale;
@@ -69,7 +74,10 @@ export const LightScene: React.FC<{ layout: Layout }> = ({ layout }) => {
   const phoneRight =
     layout.width / 2 + PHONE_SHIFT + (PHONE.width * layout.demo.phoneScale) / 2;
   // Sobrepõe ~20% ao celular, sem passar da margem lateral (folga para a perspectiva)
-  const calLeft = Math.min(phoneRight - 0.2 * calW, layout.width - side - 12 - calW);
+  const calLeft = Math.min(
+    phoneRight - 0.2 * calW,
+    layout.width - side - 12 - calW,
+  );
 
   // Pílulas: entram junto com a mensagem indicada em timing.ts
   const chipAt = (index: number) => demoAt + DEMO.mensagens[index];
@@ -180,12 +188,19 @@ export const LightScene: React.FC<{ layout: Layout }> = ({ layout }) => {
       {/* Cena 6 */}
       {b >= BENEFICIOS.titulo - 1 ? (
         <AbsoluteFill style={{ scale: drift }}>
+          {/* Título + checklist centralizados juntos na área segura */}
           <div
             style={{
               position: "absolute",
-              top: layout.benefits.titleTop,
+              top: layout.safe.top,
+              height: layout.safe.bottom - layout.safe.top,
               left: side,
               right: side,
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "center",
+              alignItems: "center",
+              gap: layout.benefits.gap,
             }}
           >
             <KineticHeadline
@@ -193,19 +208,17 @@ export const LightScene: React.FC<{ layout: Layout }> = ({ layout }) => {
               start={benAt + BENEFICIOS.titulo}
               tone="light"
               fontSize={layout.headlineSize}
+              style={{ width: "100%" }}
             />
-          </div>
-          <div
-            style={{
-              position: "absolute",
-              top: layout.benefits.listTop,
-              left: side,
-              right: side,
-              display: "flex",
-              justifyContent: "center",
-            }}
-          >
-            <div style={{ display: "flex", flexDirection: "column", gap: 44 }}>
+            {/* maxWidth: folga para o zoom da cena não levar os círculos à margem */}
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                gap: 44,
+                maxWidth: 900,
+              }}
+            >
               {copy.beneficios.itens.map((item, i) => (
                 <ChecklistItem
                   key={item}

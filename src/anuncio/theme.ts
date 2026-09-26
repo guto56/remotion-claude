@@ -35,7 +35,7 @@ export const type = {
   chat: 34, // texto da conversa
   chatTime: 22, // horário dentro do balão
   chip: 34,
-  checklist: 48,
+  checklist: 56,
   statNumber: 260,
   statText: 56,
   statSource: 28,

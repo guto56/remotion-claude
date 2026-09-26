@@ -81,6 +81,7 @@ export const NightScene: React.FC<{
     start: number,
     exitAt?: number,
     red = false,
+    entrance = true,
   ) =>
     frame >= start - 1 && (exitAt === undefined || frame < exitAt + MOTION.exitFrames) ? (
       <div
@@ -98,6 +99,7 @@ export const NightScene: React.FC<{
           tone="dark"
           fontSize={layout.headlineSize}
           highlightColor={red ? colors.red : undefined}
+          entrance={entrance}
           shake={red}
         />
       </div>
@@ -275,7 +277,8 @@ export const NightScene: React.FC<{
         </div>
       ) : null}
 
-      {headline(copy.gancho[gancho], GANCHO.titulo, GANCHO.tituloSai)}
+      {/* Gancho já completo no frame 0 (o 1º frame costuma ser a capa no feed) */}
+      {headline(copy.gancho[gancho], GANCHO.titulo, GANCHO.tituloSai, false, false)}
       {headline(copy.dor.titulo1, dorAt + DOR.titulo1, dorAt + DOR.titulo1Sai)}
       {headline(copy.dor.titulo2, dorAt + DOR.titulo2, undefined, true)}
     </AbsoluteFill>

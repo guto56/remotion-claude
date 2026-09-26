@@ -130,7 +130,8 @@ export const copy = {
   cta: {
     empresa: "Corso Automação",
     titulo: "Quer isso no seu negócio?",
-    chamada: "Toque em [Enviar mensagem] e teste agora",
+    // \n força a quebra de linha: o nome do botão fica inteiro na linha do meio
+    chamada: "Toque em\n[Enviar mensagem]\ne teste agora",
     subtexto: "Quem vai te responder é a nossa assistente.",
   },
 
