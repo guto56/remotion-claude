@@ -136,19 +136,18 @@ export const copy = {
 
   // Locução: o que está GRAVADO em public/voz/<id>.mp3 (voz do Cartesia).
   // Mudar aqui não muda o som: é preciso gravar a fala de novo.
-  // Atenção: a gravação atual ainda fala "clínica" e "paciente".
   // Os momentos de cada fala ficam em timing.ts (VOZ).
   locucao: {
-    "gancho-dor": "Seu paciente te chamou às onze da noite.",
-    "gancho-pergunta": "Quanto tempo sua clínica demora pra responder?",
-    dor: "De manhã... o paciente já marcou na concorrente.",
+    "gancho-dor": "Seu cliente te chamou às onze da noite.",
+    "gancho-pergunta": "Quanto tempo seu negócio demora pra responder?",
+    dor: "De manhã... o cliente já fechou com a concorrente.",
     dado: "Cinco minutos fazem toda a diferença.",
-    virada: "E se sua clínica respondesse em três segundos?",
+    virada: "E se seu negócio respondesse em três segundos?",
     "demo-1": "Ela responde na hora, a qualquer hora.",
     "demo-2": "Mostra os horários reais da sua agenda...",
-    "demo-3": "E agenda o paciente sozinha.",
+    "demo-3": "E agenda o cliente sozinha.",
     beneficios: "Enquanto isso, você só atende.",
-    cta: "Quer isso na sua clínica? Toque em enviar mensagem.",
+    cta: "Quer isso no seu negócio? Toque em enviar mensagem.",
   },
 } as const;
 
