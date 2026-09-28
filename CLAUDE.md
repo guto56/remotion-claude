@@ -5,13 +5,14 @@ Projeto Remotion do anúncio da Corso Automação, assistente de IA para WhatsAp
 ## Comandos
 
 - `npm run dev`: Remotion Studio
-- `npm run render:dor` / `render:pergunta` / `render:feed` / `render:treino` / `render:treino-16x9`: renderiza em `out/`
+- `npm run render:dor` / `render:pergunta` / `render:feed` / `render:treino` / `render:treino-16x9` / `render:manual` (+ `capa:manual`): renderiza em `out/`
 - `npx remotion still <CompId> out/x.png --frame=<n> --props='{"gancho":"dor","formato":"reels","showSafeZone":true,"withAudio":false}'`: checagem visual de um frame (com a área segura)
 - `npm run lint`: eslint + tsc
 
 ## Estrutura
 
-- `src/Root.tsx`: registra `Anuncio-Dor`, `Anuncio-Pergunta`, `Anuncio-Feed`, `Treino-Segunda` e `Treino-Segunda-16x9`
+- `src/Root.tsx`: registra `Anuncio-Dor`, `Anuncio-Pergunta`, `Anuncio-Feed`, `Treino-Segunda`, `Treino-Segunda-16x9` e `ManualPintura`
+- `src/config.ts` + `src/manual/`: vídeo `ManualPintura` (divulgação do manual de pintura). Tudo que é editável fica em `src/config.ts`; páginas do PDF em `public/pages/`, áudios (fornecidos pelo usuário) em `public/audio/`
 - `src/treino/`: vídeo editado "Treino de segunda" (veja README.md). `edl.ts` é gerado por `scripts/treino/preparar.py`; a mídia (`public/treino/*.mp4|wav`) não vai para o Git
 - `src/anuncio/copy.ts` (textos), `theme.ts` (cores/fontes), `timing.ts` (frames), `layout.ts` (posições por formato)
 - `src/anuncio/scenes/`: `NightScene` (cenas 1-2), `StatScene` (3), `LightScene` (4-6), `CtaScene` (7)

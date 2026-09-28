@@ -83,3 +83,17 @@ Onde editar, em `src/treino/`:
 - **Cortes e tempos**: `SEGMENTOS`, `MOMENTOS` e `LEGENDAS` em `scripts/treino/preparar.py` (em segundos do vídeo original); rode o script de novo depois.
 - **Textos e enquadramento de cada corte** (um por formato): `roteiro.ts`.
 - **Cores e fontes**: `theme.ts`. **Posições** (por formato): `layout.ts`. **Volumes e efeitos**: `TreinoAudio.tsx`.
+
+## Vídeo "Manual de Pintura para Iniciantes" (`ManualPintura`)
+
+Divulgação do manual em PDF (5 folhas de treino de pintura em vidro), 1080x1920, 30 fps, 1200 frames (40 s). Sem narração: todo o conteúdo fica na tela.
+
+```bash
+npm run render:manual   # out/manual-pintura.mp4
+npm run capa:manual     # out/capa.png (frame 1150)
+```
+
+- **Tudo que é editável** (durações, cores, textos, focos do zoom, volumes, flag `AUDIO_ENABLED`): `src/config.ts`.
+- **Componentes**: `src/manual/components/` (`PaperBackground`, `PageSheet`, `BrushDrop`, `LabelChip`, `GlassPlate`, `CTA`, `Palavras`); cenas em `src/manual/cenas/`.
+- **Páginas**: `public/pages/page-1.png` … `page-5.png`, geradas do PDF a 300 dpi (`pdftoppm -r 300 -png manual_pintura_folhas_flores.pdf public/pages/page` e renomear).
+- **Áudio**: `public/audio/` com `musica.mp3`, `papel.mp3`, `pincel.mp3`, `pop.mp3`, `whoosh.mp3`, `sino.mp3`. Arquivo que faltar é pulado (o render não quebra) e aparece num aviso no console.

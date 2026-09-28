@@ -8,6 +8,8 @@ import {
 import { FPS, SCENES } from "./anuncio/timing";
 import { DURACAO, FPS as TREINO_FPS } from "./treino/edl";
 import { Treino, treinoSchema } from "./treino/Treino";
+import { VIDEO } from "./config";
+import { ManualPintura } from "./manual/ManualPintura";
 
 export const RemotionRoot: React.FC = () => {
   return (
@@ -84,6 +86,15 @@ export const RemotionRoot: React.FC = () => {
         width={1920}
         height={1080}
         defaultProps={{ formato: "youtube", showSafeZone: false, withAudio: true }}
+      />
+      {/* Divulgação do Manual de Pintura (Reels/TikTok) */}
+      <Composition
+        id="ManualPintura"
+        component={ManualPintura}
+        durationInFrames={VIDEO.duracao}
+        fps={VIDEO.fps}
+        width={VIDEO.width}
+        height={VIDEO.height}
       />
     </>
   );
