@@ -19,7 +19,7 @@ const EFEITOS: [string, number, number][] = [
   ["pop.mp3", MOMENTO.desgaste, 0.3],
   ["pop.mp3", MOMENTO.aquecer, 0.3],
   ["swoosh.mp3", INICIO.gosto - SWOOSH_ANTES, 0.22],
-  ["impacto.mp3", MOMENTO.peito - 1, 0.32],
+  ["impacto.mp3", MOMENTO.peito - 1, 0.22],
   ["impacto.mp3", MOMENTO.triceps - 1, 0.22],
   ["swoosh.mp3", INICIO.crucifixo - SWOOSH_ANTES, 0.32],
   ["pop.mp3", MOMENTO.aquecerPeito, 0.26],
