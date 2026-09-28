@@ -10,6 +10,8 @@ import { DURACAO, FPS as TREINO_FPS } from "./treino/edl";
 import { Treino, treinoSchema } from "./treino/Treino";
 import { VIDEO } from "./config";
 import { ManualPintura } from "./manual/ManualPintura";
+import { Dono, donoSchema } from "./dono/Dono";
+import { DURACAO as DONO_DURACAO, FPS as DONO_FPS } from "./dono/timing";
 
 export const RemotionRoot: React.FC = () => {
   return (
@@ -86,6 +88,27 @@ export const RemotionRoot: React.FC = () => {
         width={1920}
         height={1080}
         defaultProps={{ formato: "youtube", showSafeZone: false, withAudio: true }}
+      />
+      {/* Anúncio "Dono de negócio" (Reels 9:16 e Feed 4:5, mesmo roteiro) */}
+      <Composition
+        id="Anuncio-Dono"
+        component={Dono}
+        schema={donoSchema}
+        durationInFrames={DONO_DURACAO}
+        fps={DONO_FPS}
+        width={1080}
+        height={1920}
+        defaultProps={{ formato: "reels", showSafeZone: false, withAudio: true }}
+      />
+      <Composition
+        id="Anuncio-Dono-Feed"
+        component={Dono}
+        schema={donoSchema}
+        durationInFrames={DONO_DURACAO}
+        fps={DONO_FPS}
+        width={1080}
+        height={1350}
+        defaultProps={{ formato: "feed", showSafeZone: false, withAudio: true }}
       />
       {/* Divulgação do Manual de Pintura (Reels/TikTok) */}
       <Composition

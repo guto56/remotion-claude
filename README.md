@@ -97,3 +97,30 @@ npm run capa:manual     # out/capa.png (frame 1150)
 - **Componentes**: `src/manual/components/` (`PaperBackground`, `PageSheet`, `BrushDrop`, `LabelChip`, `GlassPlate`, `CTA`, `Palavras`); cenas em `src/manual/cenas/`.
 - **Páginas**: `public/pages/page-1.png` … `page-5.png`, geradas do PDF a 300 dpi (`pdftoppm -r 300 -png manual_pintura_folhas_flores.pdf public/pages/page` e renomear).
 - **Áudio**: `public/audio/` com `musica.mp3`, `papel.mp3`, `pincel.mp3`, `pop.mp3`, `whoosh.mp3`, `sino.mp3`. Arquivo que faltar é pulado (o render não quebra) e aparece num aviso no console.
+
+## Anúncio "Dono de negócio" (`Anuncio-Dono` e `Anuncio-Dono-Feed`)
+
+Anúncio de 30 s para donos de negócio (clínicas, salões, prestadores e lojas), pensado para ser entendido no mudo. Mesmo roteiro e mesmos tempos nos dois formatos:
+
+| Composição | Formato |
+| --- | --- |
+| `Anuncio-Dono` | 1080x1920 (Reels) |
+| `Anuncio-Dono-Feed` | 1080x1350 (4:5), celular menor e títulos acima dele |
+
+```bash
+npm run render:dono        # out/anuncio-dono.mp4
+npm run render:dono-feed   # out/anuncio-dono-feed.mp4
+```
+
+Em `src/dono/`: **textos** em `copy.ts` (títulos com `[destaque]`, mensagens com `*negrito*` e `\n`), **cores e fontes** em `theme.ts`, **tempos** em `timing.ts`, **posições por formato** em `layout.ts`, **áudio** em `DonoAudio.tsx`.
+
+Props: `showSafeZone` (faixas vermelhas em y 0–250 e 1250–1920) e `withAudio`.
+
+Áudio (opcional, o render não quebra sem eles): `public/music.mp3`, `ping.mp3`, `pop.mp3`, `swoosh.mp3`, `success.mp3` e a locução em `public/dono/voz/<id>.mp3`. A locução (voz Felipe, Cartesia) é gerada por:
+
+```bash
+export CARTESIA_API_KEY=sk_car_...   # nunca no repositório
+python3 scripts/dono/gerar-voz.py    # textos de `locucao` em copy.ts
+```
+
+Depois, ajuste os frames de início em `VOZ` (`timing.ts`) se alguma fala ficar longa demais.
