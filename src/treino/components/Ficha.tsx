@@ -111,7 +111,8 @@ export const Ficha: React.FC<{ lado: number; fim: number; layout: LayoutTreino }
   const { final } = layout;
   const dx = final.fichaDx * fim;
   const escala = 1 + (final.fichaEscala - 1) * fim;
-  const visivel = Math.max(lado, fim);
+  // lado cai enquanto fim sobe (mesma curva): a soma fica em 1 na transição
+  const visivel = Math.min(1, lado + fim);
 
   return (
     <AbsoluteFill
