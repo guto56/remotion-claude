@@ -20,13 +20,14 @@ import { Clarao, PalavraGigante } from "./components/PalavraGigante";
 import { Semana } from "./components/Semana";
 import { Titulo } from "./components/Titulo";
 import { INICIO } from "./edl";
-import { H, W } from "./layout";
+import { getLayoutTreino } from "./layout";
 import { clamp } from "./lib";
 import { cores } from "./theme";
 import { TreinoAudio } from "./TreinoAudio";
 
 export const treinoSchema = z.object({
-  showSafeZone: z.boolean(), // faixas cobertas pelo Instagram
+  formato: z.enum(["reels", "youtube"]),
+  showSafeZone: z.boolean(), // faixas cobertas pelo Instagram (só Reels)
   withAudio: z.boolean(),
 });
 
@@ -47,7 +48,7 @@ const deLado = (frame: number, de: number, ate: number) =>
 // Granulação de filme por cima de tudo: mosaico de uma textura de ruído,
 // deslocado a cada frame
 const GRAO = 512;
-const Grao: React.FC = () => {
+const Grao: React.FC<{ width: number; height: number }> = ({ width: W, height: H }) => {
   const frame = useCurrentFrame();
   const x = Math.floor(random(`gx-${frame}`) * GRAO);
   const y = Math.floor(random(`gy-${frame}`) * GRAO);
@@ -71,11 +72,47 @@ const Grao: React.FC = () => {
   );
 };
 
+// 16:9: degradês escuros do lado dos textos (o vídeo continua em tela cheia)
+const Sombras: React.FC<{ esquerda: number; direita: number; baixo: number }> = ({
+  esquerda,
+  direita,
+  baixo,
+}) => (
+  <>
+    <AbsoluteFill
+      style={{
+        opacity: esquerda,
+        background:
+          "linear-gradient(to right, rgba(9,9,10,0.9) 0%, rgba(9,9,10,0.72) 32%, rgba(9,9,10,0) 58%)",
+      }}
+    />
+    <AbsoluteFill
+      style={{
+        opacity: direita,
+        background:
+          "linear-gradient(to left, rgba(9,9,10,0.9) 0%, rgba(9,9,10,0.72) 36%, rgba(9,9,10,0) 62%)",
+      }}
+    />
+    <AbsoluteFill
+      style={{
+        opacity: baixo,
+        background: "linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.35) 28%, rgba(0,0,0,0) 50%)",
+      }}
+    />
+  </>
+);
+
+// 0..1 entre `de` e `ate`, com rampas de `rampa` frames
+const janela = (frame: number, de: number, ate: number, rampa = 8) =>
+  interpolate(frame, [de - rampa, de, ate, ate + rampa], [0, 1, 1, 0], clamp);
+
 export const Treino: React.FC<z.infer<typeof treinoSchema>> = ({
+  formato,
   showSafeZone,
   withAudio,
 }) => {
   const frame = useCurrentFrame();
+  const layout = getLayoutTreino(formato);
   const esquerda = deLado(frame, INICIO.importante, INICIO.gosto);
   const direita = deLado(frame, INICIO.crucifixo, INICIO.final + 2);
   // Final: o vídeo volta a ocupar a tela, desfocado e escuro, atrás da ficha
@@ -93,20 +130,43 @@ export const Treino: React.FC<z.infer<typeof treinoSchema>> = ({
             "radial-gradient(circle at 78% 38%, rgba(212,255,58,0.10), rgba(212,255,58,0) 45%), radial-gradient(circle at 20% 70%, rgba(212,255,58,0.07), rgba(212,255,58,0) 40%)",
         }}
       />
-      <Plano esquerda={esquerda} direita={direita} fim={fim}>
-        <Camera />
+      {/* Reels: o vídeo vira um card de lado. 16:9: fica em tela cheia e a câmera reenquadra */}
+      <Plano
+        esquerda={layout.cardLateral ? esquerda : 0}
+        direita={layout.cardLateral ? direita : 0}
+        fim={fim}
+        gradienteTopo={layout.cardLateral}
+        width={layout.width}
+        height={layout.height}
+      >
+        <Camera formato={formato} />
       </Plano>
+      {layout.cardLateral ? null : (
+        <Sombras
+          // texto à esquerda: gancho, "PEITO + TRÍCEPS" e a ficha
+          esquerda={Math.max(
+            janela(frame, 0, INICIO.nas, 8),
+            janela(frame, INICIO.peito, INICIO.final + 200, 6),
+          )}
+          direita={esquerda}
+          // legendas e faixa da semana embaixo
+          baixo={Math.max(
+            janela(frame, INICIO.nas, INICIO.importante, 6),
+            janela(frame, INICIO.gosto + 10, INICIO.peito, 6),
+          )}
+        />
+      )}
       <Clarao />
-      <Titulo />
-      <Semana />
-      <Legendas />
-      <PalavraGigante />
-      <Importante lado={esquerda} />
-      <Ficha lado={direita} fim={fim} />
-      <Cta />
-      <Grao />
+      <Titulo formato={formato} layout={layout} />
+      <Semana layout={layout} />
+      <Legendas layout={layout} />
+      <PalavraGigante layout={layout} />
+      <Importante lado={esquerda} layout={layout} />
+      <Ficha lado={direita} fim={fim} layout={layout} />
+      <Cta layout={layout} />
+      <Grao width={layout.width} height={layout.height} />
       {withAudio ? <TreinoAudio /> : null}
-      {showSafeZone ? <SafeZoneOverlay layout={getLayout("reels")} /> : null}
+      {showSafeZone && formato === "reels" ? <SafeZoneOverlay layout={getLayout("reels")} /> : null}
     </AbsoluteFill>
   );
 };

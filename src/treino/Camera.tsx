@@ -9,29 +9,42 @@ import {
   useCurrentFrame,
 } from "remotion";
 import { CLIPES, type Clipe } from "./edl";
-import { H, OLHOS_Y, PLANO, ROSTO, W } from "./layout";
+import { type Formato, getLayoutTreino, type LayoutTreino, PLANO, ROSTO } from "./layout";
 import { clamp } from "./lib";
 import { ENQUADRAMENTO, type Enquadramento } from "./roteiro";
 
-// Largura do vídeo original (16:9) quando a altura dele é a da tela
-const LARGURA_BASE = (H * 16) / 9;
 // Correção de cor leve: a gravação é noturna e fica apagada
 const GRADE = "contrast(1.06) saturate(1.02) brightness(1.03)";
 
-const Clip: React.FC<{ clipe: Clipe; enq: Enquadramento }> = ({ clipe, enq }) => {
+const Clip: React.FC<{ clipe: Clipe; enq: Enquadramento; layout: LayoutTreino }> = ({
+  clipe,
+  enq,
+  layout,
+}) => {
   const frame = useCurrentFrame();
+  const { width: W, height: H } = layout;
   // Câmera avança devagar durante o clipe
   const avanco = interpolate(frame, [0, clipe.frames], [0, 0.025], clamp);
   // "Soco": entra 10% mais aberto e fecha em 6 frames
   const soco = enq.soco
     ? interpolate(frame, [0, 6], [-0.1, 0], { ...clamp, easing: Easing.out(Easing.cubic) })
     : 0;
-  const z = enq.z * (1 + avanco) * (1 + soco);
+  // Mudança de ângulo: desliza de `vem` até o enquadramento
+  const t = enq.vem
+    ? interpolate(frame, [0, enq.suave ?? 16], [0, 1], {
+        ...clamp,
+        easing: Easing.bezier(0.45, 0, 0.2, 1),
+      })
+    : 1;
+  const zBase = enq.vem ? enq.vem.z + (enq.z - enq.vem.z) * t : enq.z;
+  const xBase = enq.vem ? (enq.vem.x ?? 0) + ((enq.x ?? 0) - (enq.vem.x ?? 0)) * t : (enq.x ?? 0);
+
+  const z = zBase * (1 + avanco) * (1 + soco);
   const h = H * z;
-  const w = LARGURA_BASE * z;
-  // Rosto no centro (mais o deslocamento do enquadramento), sem deixar borda vazia
-  const left = Math.min(0, Math.max(W - w, W / 2 + (enq.x ?? 0) - ROSTO.x * w));
-  const top = Math.min(0, Math.max(H - h, OLHOS_Y - ROSTO.olhos * h));
+  const w = ((H * 16) / 9) * z; // o original é 16:9
+  // Rosto no lugar pedido, sem deixar borda vazia
+  const left = Math.min(0, Math.max(W - w, W / 2 + xBase - ROSTO.x * w));
+  const top = Math.min(0, Math.max(H - h, layout.olhosY - ROSTO.olhos * h));
 
   return (
     <OffthreadVideo
@@ -46,24 +59,31 @@ const Clip: React.FC<{ clipe: Clipe; enq: Enquadramento }> = ({ clipe, enq }) =>
 };
 
 // Todos os clipes em sequência (cortes do edl.ts)
-export const Camera: React.FC = () => (
-  <AbsoluteFill style={{ overflow: "hidden" }}>
-    {CLIPES.map((c) => (
-      <Sequence key={c.nome} name={c.nome} from={c.de} durationInFrames={c.frames}>
-        <Clip clipe={c} enq={ENQUADRAMENTO[c.nome] ?? { z: 1 }} />
-      </Sequence>
-    ))}
-  </AbsoluteFill>
-);
+export const Camera: React.FC<{ formato: Formato }> = ({ formato }) => {
+  const layout = getLayoutTreino(formato);
+  return (
+    <AbsoluteFill style={{ overflow: "hidden" }}>
+      {CLIPES.map((c) => (
+        <Sequence key={c.nome} name={c.nome} from={c.de} durationInFrames={c.frames}>
+          <Clip clipe={c} enq={ENQUADRAMENTO[formato][c.nome] ?? { z: 1 }} layout={layout} />
+        </Sequence>
+      ))}
+    </AbsoluteFill>
+  );
+};
 
-// O vídeo como um "plano" que pode encolher para um lado, girando em 3D.
+// O vídeo como um "plano" que pode encolher para um lado, girando em 3D (Reels).
 // esquerda/direita: 0 = tela cheia, 1 = card de lado. fim: 0..1 (desfoca e escurece).
+// gradienteTopo: escurece o topo, onde ficam os textos no Reels.
 export const Plano: React.FC<{
   esquerda: number;
   direita: number;
   fim: number;
+  gradienteTopo: boolean;
+  width: number;
+  height: number;
   children: React.ReactNode;
-}> = ({ esquerda, direita, fim, children }) => {
+}> = ({ esquerda, direita, fim, gradienteTopo, width: W, height: H, children }) => {
   const frame = useCurrentFrame();
   const lado = esquerda + direita; // nunca os dois ao mesmo tempo
   const s = 1 - (1 - PLANO.escala) * lado;
@@ -89,14 +109,15 @@ export const Plano: React.FC<{
         <AbsoluteFill style={{ filter: fim > 0 ? `blur(${16 * fim}px)` : undefined }}>
           {children}
         </AbsoluteFill>
-        {/* Escurece o topo (textos por cima) e as bordas */}
-        <AbsoluteFill
-          style={{
-            opacity: 1 - lado,
-            background:
-              "linear-gradient(to bottom, rgba(0,0,0,0.55) 0px, rgba(0,0,0,0.22) 420px, rgba(0,0,0,0) 760px)",
-          }}
-        />
+        {gradienteTopo ? (
+          <AbsoluteFill
+            style={{
+              opacity: 1 - lado,
+              background:
+                "linear-gradient(to bottom, rgba(0,0,0,0.55) 0px, rgba(0,0,0,0.22) 420px, rgba(0,0,0,0) 760px)",
+            }}
+          />
+        ) : null}
         <AbsoluteFill
           style={{
             background:

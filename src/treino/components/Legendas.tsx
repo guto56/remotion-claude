@@ -1,9 +1,9 @@
 import React from "react";
 import { AbsoluteFill, useCurrentFrame, useVideoConfig } from "remotion";
 import { INICIO, LEGENDA } from "../edl";
-import { SAFE, TEXTO_TOPO } from "../layout";
+import type { LayoutTreino } from "../layout";
 import { entra, opacidade, partes, sai } from "../lib";
-import { cores, fontes, sombraTexto, tamanho } from "../theme";
+import { cores, fontes, sombraTexto } from "../theme";
 
 // Legendas só em alguns trechos (edl.ts > LEGENDA). Cada palavra entra
 // quando é dita; o bloco some quando começa o próximo.
@@ -13,7 +13,7 @@ const GRUPOS: { palavras: [string, number][]; ate: number }[] = [
   { palavras: LEGENDA.faco, ate: INICIO.peito },
 ];
 
-export const Legendas: React.FC = () => {
+export const Legendas: React.FC<{ layout: LayoutTreino }> = ({ layout }) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
   const grupo = GRUPOS.find((g) => frame >= g.palavras[0][1] - 2 && frame < g.ate + 6);
@@ -25,15 +25,15 @@ export const Legendas: React.FC = () => {
       <div
         style={{
           position: "absolute",
-          top: TEXTO_TOPO + 10,
-          left: SAFE.side,
-          right: SAFE.side,
+          top: layout.legenda.top,
+          left: layout.legenda.lado,
+          right: layout.legenda.lado,
           display: "flex",
           flexWrap: "wrap",
           justifyContent: "center",
           columnGap: 22,
           fontFamily: fontes.impacto,
-          fontSize: tamanho.legenda,
+          fontSize: layout.legenda.tamanho,
           lineHeight: 1.08,
           textShadow: sombraTexto,
           opacity: o,

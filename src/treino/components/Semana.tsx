@@ -1,13 +1,13 @@
 import React from "react";
 import { AbsoluteFill, interpolate, useCurrentFrame, useVideoConfig } from "remotion";
 import { INICIO, MOMENTO } from "../edl";
-import { TEXTO_TOPO } from "../layout";
+import type { LayoutTreino } from "../layout";
 import { entra, opacidade, sai } from "../lib";
 import { textos } from "../roteiro";
 import { cores, fontes } from "../theme";
 
 // Faixa da semana: aparece no "nas" e acende o SEG no "segunda-feira".
-export const Semana: React.FC = () => {
+export const Semana: React.FC<{ layout: LayoutTreino }> = ({ layout }) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
   const inicio = INICIO.nas;
@@ -21,14 +21,15 @@ export const Semana: React.FC = () => {
       <div
         style={{
           position: "absolute",
-          top: TEXTO_TOPO + 20,
+          top: layout.semana.top,
           left: 0,
           right: 0,
           display: "flex",
           justifyContent: "center",
           gap: 12,
           opacity: o,
-          transform: `translateY(${(1 - o) * -30}px)`,
+          transform: `translateY(${(1 - o) * -30}px) scale(${layout.semana.escala})`,
+          transformOrigin: "center top",
         }}
       >
         {textos.semana.map((dia, i) => {

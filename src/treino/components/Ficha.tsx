@@ -2,7 +2,7 @@ import { CheckCheck, Flame } from "lucide-react";
 import React from "react";
 import { AbsoluteFill, interpolate, useCurrentFrame, useVideoConfig } from "remotion";
 import { INICIO, MOMENTO } from "../edl";
-import { COLUNA, FINAL, SAFE, W } from "../layout";
+import type { LayoutTreino } from "../layout";
 import { clamp, entra, opacidade, partes } from "../lib";
 import { textos } from "../roteiro";
 import { cores, fontes, tamanho } from "../theme";
@@ -82,7 +82,11 @@ const Nome: React.FC<{ texto: string; p: number; cor?: string }> = ({ texto, p, 
 
 // Ficha do treino montada item por item, ao lado do vídeo.
 // `lado` (0..1): quanto o vídeo foi para a direita. `fim` (0..1): vai para o centro.
-export const Ficha: React.FC<{ lado: number; fim: number }> = ({ lado, fim }) => {
+export const Ficha: React.FC<{ lado: number; fim: number; layout: LayoutTreino }> = ({
+  lado,
+  fim,
+  layout,
+}) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
   if (frame < INICIO.crucifixo) return null;
@@ -103,31 +107,32 @@ export const Ficha: React.FC<{ lado: number; fim: number }> = ({ lado, fim }) =>
     clamp,
   );
 
-  // No final a ficha vai para o centro e cresce um pouco
-  const centroColuna = COLUNA.ficha.left + COLUNA.ficha.width / 2;
-  const dx = (W / 2 - centroColuna) * fim;
-  const escala = 1 + (FINAL.fichaEscala - 1) * fim;
+  // No final a ficha pode andar e crescer (Reels: vai para o centro)
+  const { final } = layout;
+  const dx = final.fichaDx * fim;
+  const escala = 1 + (final.fichaEscala - 1) * fim;
   const visivel = Math.max(lado, fim);
 
   return (
     <AbsoluteFill
       style={{
         opacity: opacidade(visivel * 1.4 - 0.2),
-        transform: `translate(${dx}px, ${FINAL.fichaSobe * fim}px)`,
+        transform: `translate(${dx}px, ${final.fichaDy * fim}px)`,
       }}
     >
       <div
         style={{
           position: "absolute",
-          left: COLUNA.ficha.left,
-          width: COLUNA.ficha.width,
-          top: SAFE.top,
-          height: SAFE.bottom - SAFE.top,
+          left: layout.ficha.left,
+          width: layout.ficha.width,
+          top: layout.ficha.top,
+          height: layout.ficha.height,
           display: "flex",
           flexDirection: "column",
           justifyContent: "center",
           gap: 30,
-          transform: `scale(${escala})`,
+          transform: `scale(${escala * layout.ficha.escala})`,
+          transformOrigin: layout.ficha.origem,
         }}
       >
         <div>

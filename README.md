@@ -57,10 +57,16 @@ npm run render:audio-pergunta   # out/anuncio-pergunta-audio.mp3 (serve também 
 
 ## Vídeo "Treino de segunda" (`Treino-Segunda`)
 
-Edição de um vídeo gravado no celular (fala sobre o treino de peito e tríceps da segunda-feira), em 1080x1920, com cortes das pausas, fala 1,1x mais rápida, câmera virtual (zoom e o vídeo virando um card de lado), gráficos e legendas só nos momentos de ênfase.
+Edição de um vídeo gravado no celular (fala sobre o treino de peito e tríceps da segunda-feira), com cortes das pausas, fala 1,1x mais rápida, câmera virtual, gráficos e legendas só nos momentos de ênfase. Dois formatos, com os mesmos cortes e o mesmo áudio:
+
+| Composição | Formato | Câmera nos gráficos |
+| --- | --- | --- |
+| `Treino-Segunda` | 1080x1920 (Reels) | o vídeo encolhe e vira um card de lado, em 3D |
+| `Treino-Segunda-16x9` | 1920x1080 (YouTube) | o vídeo fica em tela cheia; a câmera reenquadra o rosto num terço e o gráfico entra do outro lado |
 
 ```bash
-npm run render:treino   # out/treino-segunda.mp4
+npm run render:treino        # out/treino-segunda.mp4
+npm run render:treino-16x9   # out/treino-segunda-16x9.mp4
 ```
 
 A mídia não fica no Git. Para renderizar de novo:
@@ -75,5 +81,5 @@ A mídia não fica no Git. Para renderizar de novo:
 Onde editar, em `src/treino/`:
 
 - **Cortes e tempos**: `SEGMENTOS`, `MOMENTOS` e `LEGENDAS` em `scripts/treino/preparar.py` (em segundos do vídeo original); rode o script de novo depois.
-- **Textos e enquadramento de cada corte**: `roteiro.ts`.
-- **Cores e fontes**: `theme.ts`. **Posições**: `layout.ts`. **Volumes e efeitos**: `TreinoAudio.tsx`.
+- **Textos e enquadramento de cada corte** (um por formato): `roteiro.ts`.
+- **Cores e fontes**: `theme.ts`. **Posições** (por formato): `layout.ts`. **Volumes e efeitos**: `TreinoAudio.tsx`.

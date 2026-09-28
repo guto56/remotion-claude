@@ -2,13 +2,13 @@ import { Bookmark } from "lucide-react";
 import React from "react";
 import { AbsoluteFill, useCurrentFrame, useVideoConfig } from "remotion";
 import { INICIO } from "../edl";
-import { FINAL } from "../layout";
+import type { LayoutTreino } from "../layout";
 import { entra, opacidade } from "../lib";
 import { textos } from "../roteiro";
 import { cores, fontes } from "../theme";
 
 // Chamada final (salvar o treino). Fica completa até o último frame.
-export const Cta: React.FC = () => {
+export const Cta: React.FC<{ layout: LayoutTreino }> = ({ layout }) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
   const inicio = INICIO.final + 14;
@@ -23,12 +23,14 @@ export const Cta: React.FC = () => {
       <div
         style={{
           position: "absolute",
-          top: FINAL.ctaTop,
-          left: 0,
-          right: 0,
+          top: layout.final.cta.top,
+          left: layout.final.cta.left,
+          width: layout.final.cta.width,
+          height: layout.final.cta.height,
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
+          justifyContent: layout.cardLateral ? "flex-start" : "center",
           gap: 20,
         }}
       >

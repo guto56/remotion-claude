@@ -2,7 +2,7 @@ import { Flame, ShieldCheck } from "lucide-react";
 import React from "react";
 import { AbsoluteFill, useCurrentFrame, useVideoConfig } from "remotion";
 import { INICIO, MOMENTO } from "../edl";
-import { COLUNA, SAFE } from "../layout";
+import type { LayoutTreino } from "../layout";
 import { entra, opacidade } from "../lib";
 import { textos } from "../roteiro";
 import { cores, fontes, tamanho } from "../theme";
@@ -11,7 +11,10 @@ const ICONES = [ShieldCheck, Flame];
 
 // Coluna da direita na cena "O importante": rótulo, frase e dois cards.
 // `lado` (0..1) é o quanto o vídeo já foi para o canto (entra e sai junto).
-export const Importante: React.FC<{ lado: number }> = ({ lado }) => {
+export const Importante: React.FC<{ lado: number; layout: LayoutTreino }> = ({
+  lado,
+  layout,
+}) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
   if (lado <= 0.001) return null;
@@ -31,14 +34,16 @@ export const Importante: React.FC<{ lado: number }> = ({ lado }) => {
       <div
         style={{
           position: "absolute",
-          left: COLUNA.importante.left,
-          width: COLUNA.importante.width,
-          top: SAFE.top,
-          height: SAFE.bottom - SAFE.top,
+          left: layout.importante.left,
+          width: layout.importante.width,
+          top: layout.importante.top,
+          height: layout.importante.height,
           display: "flex",
           flexDirection: "column",
           justifyContent: "center",
           gap: 22,
+          transform: `scale(${layout.importante.escala})`,
+          transformOrigin: "left center",
         }}
       >
         <div

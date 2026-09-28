@@ -72,7 +72,18 @@ export const RemotionRoot: React.FC = () => {
         fps={TREINO_FPS}
         width={1080}
         height={1920}
-        defaultProps={{ showSafeZone: false, withAudio: true }}
+        defaultProps={{ formato: "reels", showSafeZone: false, withAudio: true }}
+      />
+      {/* Mesmo vídeo em 16:9 (YouTube) */}
+      <Composition
+        id="Treino-Segunda-16x9"
+        component={Treino}
+        schema={treinoSchema}
+        durationInFrames={DURACAO}
+        fps={TREINO_FPS}
+        width={1920}
+        height={1080}
+        defaultProps={{ formato: "youtube", showSafeZone: false, withAudio: true }}
       />
     </>
   );
