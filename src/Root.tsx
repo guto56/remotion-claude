@@ -6,6 +6,8 @@ import {
   calculateAnuncioMetadata,
 } from "./anuncio/Anuncio";
 import { FPS, SCENES } from "./anuncio/timing";
+import { DURACAO, FPS as TREINO_FPS } from "./treino/edl";
+import { Treino, treinoSchema } from "./treino/Treino";
 
 export const RemotionRoot: React.FC = () => {
   return (
@@ -60,6 +62,17 @@ export const RemotionRoot: React.FC = () => {
           showSafeZone: false,
           withAudio: true,
         }}
+      />
+      {/* Vídeo editado "Treino de segunda" (Reels 9:16) */}
+      <Composition
+        id="Treino-Segunda"
+        component={Treino}
+        schema={treinoSchema}
+        durationInFrames={DURACAO}
+        fps={TREINO_FPS}
+        width={1080}
+        height={1920}
+        defaultProps={{ showSafeZone: false, withAudio: true }}
       />
     </>
   );

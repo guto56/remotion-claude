@@ -8,3 +8,9 @@ out
 
 # Python
 __pycache__/
+
+# Vídeo "Treino de segunda": mídia gerada/local (ver scripts/treino/preparar.py)
+public/treino/video.mp4
+public/treino/voz.wav
+public/treino/musica.wav
+scripts/treino/.fonte48k.wav

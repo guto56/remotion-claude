@@ -5,13 +5,14 @@ Projeto Remotion do anúncio da Corso Automação, assistente de IA para WhatsAp
 ## Comandos
 
 - `npm run dev`: Remotion Studio
-- `npm run render:dor` / `render:pergunta` / `render:feed`: renderiza em `out/`
+- `npm run render:dor` / `render:pergunta` / `render:feed` / `render:treino`: renderiza em `out/`
 - `npx remotion still <CompId> out/x.png --frame=<n> --props='{"gancho":"dor","formato":"reels","showSafeZone":true,"withAudio":false}'`: checagem visual de um frame (com a área segura)
 - `npm run lint`: eslint + tsc
 
 ## Estrutura
 
-- `src/Root.tsx`: registra `Anuncio-Dor`, `Anuncio-Pergunta`, `Anuncio-Feed`
+- `src/Root.tsx`: registra `Anuncio-Dor`, `Anuncio-Pergunta`, `Anuncio-Feed` e `Treino-Segunda`
+- `src/treino/`: vídeo editado "Treino de segunda" (veja README.md). `edl.ts` é gerado por `scripts/treino/preparar.py`; a mídia (`public/treino/*.mp4|wav`) não vai para o Git
 - `src/anuncio/copy.ts` (textos), `theme.ts` (cores/fontes), `timing.ts` (frames), `layout.ts` (posições por formato)
 - `src/anuncio/scenes/`: `NightScene` (cenas 1-2), `StatScene` (3), `LightScene` (4-6), `CtaScene` (7)
 - `src/anuncio/components/`: componentes visuais reutilizáveis (inclui `CalendarCard3D`, a agenda 3D da Cena 5)

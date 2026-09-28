@@ -54,3 +54,26 @@ npm run render:audio-pergunta   # out/anuncio-pergunta-audio.mp3 (serve também 
 - `showSafeZone`: desenha em vermelho as faixas cobertas pela interface do Instagram (250 px no topo, 670 px embaixo) e as margens laterais de 64 px. Use só para conferir; deixe `false` para renderizar.
 - `withAudio`: liga/desliga todo o áudio.
 - `gancho` e `formato`: já vêm certos em cada composição.
+
+## Vídeo "Treino de segunda" (`Treino-Segunda`)
+
+Edição de um vídeo gravado no celular (fala sobre o treino de peito e tríceps da segunda-feira), em 1080x1920, com cortes das pausas, fala 1,1x mais rápida, câmera virtual (zoom e o vídeo virando um card de lado), gráficos e legendas só nos momentos de ênfase.
+
+```bash
+npm run render:treino   # out/treino-segunda.mp4
+```
+
+A mídia não fica no Git. Para renderizar de novo:
+
+1. Converta o vídeo original (HEVC HDR do iPhone) para `public/treino/video.mp4` (H.264 SDR, 4K) e extraia o áudio em WAV 48 kHz:
+   ```bash
+   npx remotion ffmpeg -i IMG_3038.mov -map 0:v:0 -map 0:a:0 -vf "zscale=t=linear:npl=100,format=gbrpf32le,zscale=p=bt709,tonemap=tonemap=mobius:desat=0,zscale=t=bt709:m=bt709:r=tv,format=yuv420p" -c:v libx264 -crf 17 -c:a aac public/treino/video.mp4
+   npx remotion ffmpeg -i IMG_3038.mov -vn -ac 2 -ar 48000 scripts/treino/.fonte48k.wav
+   ```
+2. `python3 scripts/treino/preparar.py scripts/treino/.fonte48k.wav`: gera `src/treino/edl.ts` (cortes, momentos e legendas), `public/treino/voz.wav` (fala tratada, cortada e acelerada) e `public/treino/musica.wav`.
+
+Onde editar, em `src/treino/`:
+
+- **Cortes e tempos**: `SEGMENTOS`, `MOMENTOS` e `LEGENDAS` em `scripts/treino/preparar.py` (em segundos do vídeo original); rode o script de novo depois.
+- **Textos e enquadramento de cada corte**: `roteiro.ts`.
+- **Cores e fontes**: `theme.ts`. **Posições**: `layout.ts`. **Volumes e efeitos**: `TreinoAudio.tsx`.
