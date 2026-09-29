@@ -137,9 +137,9 @@ export const copy = {
   // Locução (voz Felipe, Cartesia). Mudar aqui não muda o som: é preciso
   // gerar a fala de novo (scripts/dono/gerar-voz.py). Momentos em timing.ts (VOZ).
   locucao: {
-    gancho: "Dono de negócio: seu cliente te chamou às onze da noite.",
+    gancho: "Seu cliente te chamou às onze da noite.",
     dor: "Quando você responde de manhã, ele já comprou do concorrente.",
-    dado: "Responder em até cinco minutos dá vinte e uma vezes mais chance de avançar a venda.",
+    dado: "Responder rápido dá vinte e uma vezes mais chance.",
     virada: "E se ele fosse atendido em três segundos?",
     agenda: "Na clínica ou no salão, ela agenda o horário.",
     orcamento: "No serviço, pede a foto e marca a visita.",

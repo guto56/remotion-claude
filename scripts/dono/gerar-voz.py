@@ -30,6 +30,11 @@ OUT = os.path.join(ROOT, "public", "dono", "voz")
 API = "https://api.cartesia.ai"
 VERSAO = "2025-04-16"
 
+# Aceleração depois da geração (atempo, mantém o tom). O controle de
+# velocidade da própria Cartesia é inconsistente. 1.0 = sem mudança.
+ACELERA = 1.15
+ACELERA_POR_FALA = {"beneficios": 1.2, "dado": 1.25}
+
 
 def chave():
     k = os.environ.get("CARTESIA_API_KEY")
@@ -102,7 +107,10 @@ def main():
             )
             bruto = os.path.join(tmp, f"{i}.wav")
             open(bruto, "wb").write(audio)
-            limpo, _ = prep.process(prep.read(bruto))
+            rapido = os.path.join(tmp, f"{i}-rapido.wav")
+            fator = ACELERA_POR_FALA.get(i, ACELERA)
+            prep.ffmpeg("-i", bruto, "-af", f"atempo={fator}", rapido)
+            limpo, _ = prep.process(prep.read(rapido))
             prep.write_mp3(limpo, os.path.join(OUT, f"{i}.mp3"))
             frames = round(len(limpo) / prep.SR * prep.FPS)
             print(f"{i:<12} {frames:4d} frames  {textos[i]}")

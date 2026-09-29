@@ -13,7 +13,6 @@ const MUSICA_ABAIXA = 0.5; // durante a locução a música cai para 50%
 const EFEITOS = 0.6;
 const PING_COM_VOZ = 0.35; // pings mais baixos quando há locução por cima
 const VOZ_VOLUME = 1;
-const VOZ_DURACAO_MAX = 150; // frames (a fala é cortada pelo próprio arquivo)
 
 // Toca os arquivos de public/ que existirem; se algum faltar, é ignorado.
 export const DonoAudio: React.FC = () => {
@@ -23,9 +22,12 @@ export const DonoAudio: React.FC = () => {
   const swoosh = optionalStaticFile("swoosh.mp3");
   const success = optionalStaticFile("success.mp3");
 
-  const falas = VOZ.map(([id, frame]) => ({ id, frame, src: optionalStaticFile(`dono/voz/${id}.mp3`) })).filter(
-    (f): f is { id: string; frame: number; src: string } => f.src !== null,
-  );
+  const falas = VOZ.map(([id, frame, duracao]) => ({
+    id,
+    frame,
+    duracao,
+    src: optionalStaticFile(`dono/voz/${id}.mp3`),
+  })).filter((f): f is { id: string; frame: number; duracao: number; src: string } => f.src !== null);
   const temVozNoGancho = falas.some((f) => f.frame < NOITE.notificacoes[NOITE.notificacoes.length - 1]);
 
   const efeito = (src: string | null, frames: number[], nome: string, volume = EFEITOS) =>
@@ -44,7 +46,12 @@ export const DonoAudio: React.FC = () => {
 
   // 0..1: alguém falando (rampas de 6 frames)
   const falando = (f: number) =>
-    Math.max(0, ...falas.map((v) => interpolate(f, [v.frame - 6, v.frame, v.frame + 75, v.frame + 81], [0, 1, 1, 0], clamp)));
+    Math.max(
+      0,
+      ...falas.map((v) =>
+        interpolate(f, [v.frame - 6, v.frame, v.frame + v.duracao, v.frame + v.duracao + 6], [0, 1, 1, 0], clamp),
+      ),
+    );
 
   return (
     <>
@@ -63,7 +70,7 @@ export const DonoAudio: React.FC = () => {
       {efeito(pop, pops, "pop")}
       {efeito(success, avisos, "success")}
       {falas.map((v) => (
-        <Sequence key={v.id} from={v.frame} durationInFrames={VOZ_DURACAO_MAX} layout="none" name={`voz ${v.id}`}>
+        <Sequence key={v.id} from={v.frame} durationInFrames={v.duracao + 6} layout="none" name={`voz ${v.id}`}>
           <Audio src={v.src} volume={VOZ_VOLUME} />
         </Sequence>
       ))}

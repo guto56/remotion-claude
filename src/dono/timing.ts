@@ -73,15 +73,17 @@ export const BENEFICIOS = { titulo: 6, itens: 16, intervalo: 15 };
 // Cena 7 (frames dentro da cena)
 export const CHAMADA = { logo: 2, titulo: 8, sub: 30, seta: 40 };
 
-// Locução: [id do arquivo em public/dono/voz/, frame em que começa]
-export const VOZ: [string, number][] = [
-  ["gancho", 4],
-  ["dor", 72],
-  ["dado", 170],
-  ["virada", 244],
-  ["agenda", 318],
-  ["orcamento", 458],
-  ["pedido", 598],
-  ["beneficios", 712],
-  ["cta", 804],
+// Locução (voz Felipe, Cartesia): [id do arquivo em public/dono/voz/, frame em
+// que começa, duração em frames]. As durações vêm de scripts/dono/gerar-voz.py;
+// se gerar de novo, atualize aqui e confira que uma fala não encosta na outra.
+export const VOZ: [string, number, number][] = [
+  ["gancho", 4, 57], // cena 1
+  ["dor", 72, 80], // cena 2
+  ["dado", 167, 75], // cena 3
+  ["virada", 246, 64], // cena 4 (a resposta do chat chega logo depois, no 315)
+  ["agenda", 328, 84], // conversa A (285–425)
+  ["orcamento", 448, 80], // conversa B (425–565)
+  ["pedido", 588, 83], // conversa C (565–705)
+  ["beneficios", 709, 88], // cena 6
+  ["cta", 803, 62], // cena 7
 ];
