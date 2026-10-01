@@ -135,7 +135,7 @@ export const copy = {
   ctaSub: "Para donos de negócio · Diagnóstico gratuito",
 
   // Locução (voz Felipe, Cartesia). Mudar aqui não muda o som: é preciso
-  // gerar a fala de novo (scripts/dono/gerar-voz.py). Momentos em timing.ts (VOZ).
+  // gerar a fala de novo (python3 scripts/gerar-voz.py dono). Momentos em timing.ts (VOZ).
   locucao: {
     gancho: "Seu cliente te chamou às onze da noite.",
     dor: "Quando você responde de manhã, ele já comprou do concorrente.",

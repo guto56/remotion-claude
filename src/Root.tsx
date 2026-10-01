@@ -12,6 +12,8 @@ import { VIDEO } from "./config";
 import { ManualPintura } from "./manual/ManualPintura";
 import { Dono, donoSchema } from "./dono/Dono";
 import { DURACAO as DONO_DURACAO, FPS as DONO_FPS } from "./dono/timing";
+import { Barbearia, barbeariaSchema } from "./barbearia/Barbearia";
+import { DURACAO as BARBEARIA_DURACAO, FPS as BARBEARIA_FPS } from "./barbearia/timing";
 
 export const RemotionRoot: React.FC = () => {
   return (
@@ -106,6 +108,27 @@ export const RemotionRoot: React.FC = () => {
         schema={donoSchema}
         durationInFrames={DONO_DURACAO}
         fps={DONO_FPS}
+        width={1080}
+        height={1350}
+        defaultProps={{ formato: "feed", showSafeZone: false, withAudio: true }}
+      />
+      {/* Anúncio "Barbearia" (barbearias e salões; Reels 9:16 e Feed 4:5) */}
+      <Composition
+        id="Barbearia"
+        component={Barbearia}
+        schema={barbeariaSchema}
+        durationInFrames={BARBEARIA_DURACAO}
+        fps={BARBEARIA_FPS}
+        width={1080}
+        height={1920}
+        defaultProps={{ formato: "reels", showSafeZone: false, withAudio: true }}
+      />
+      <Composition
+        id="Barbearia-Feed"
+        component={Barbearia}
+        schema={barbeariaSchema}
+        durationInFrames={BARBEARIA_DURACAO}
+        fps={BARBEARIA_FPS}
         width={1080}
         height={1350}
         defaultProps={{ formato: "feed", showSafeZone: false, withAudio: true }}

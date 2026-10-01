@@ -120,7 +120,23 @@ Props: `showSafeZone` (faixas vermelhas em y 0–250 e 1250–1920) e `withAudio
 
 ```bash
 export CARTESIA_API_KEY=sk_car_...   # nunca no repositório
-python3 scripts/dono/gerar-voz.py    # textos de `locucao` em copy.ts
+python3 scripts/gerar-voz.py dono    # textos de `locucao` em copy.ts
 ```
 
 Depois, ajuste os frames de início em `VOZ` (`timing.ts`) se alguma fala ficar longa demais.
+
+## Anúncio "Barbearia" (`Barbearia` e `Barbearia-Feed`)
+
+Anúncio de 22 s para donos de barbearia e salão de beleza, pensado para ser entendido no mudo. Mesmo roteiro e mesmos tempos nos dois formatos: `Barbearia` (1080x1920, Reels) e `Barbearia-Feed` (1080x1350, 4:5, celular menor e títulos acima dele).
+
+```bash
+npx remotion studio                                        # abrir o Studio
+npx remotion render Barbearia out/barbearia.mp4            # Reels  (ou: npm run render:barbearia)
+npx remotion render Barbearia-Feed out/barbearia-feed.mp4  # Feed   (ou: npm run render:barbearia-feed)
+```
+
+Tudo em `src/barbearia/`: **textos** em `copy.ts` (títulos com `[destaque]`, mensagens com `*negrito*` e `\n`), **cores e fontes** em `theme.ts`, **tempos** em `timing.ts`, **posições por formato** em `layout.ts`, um componente por arquivo em `components/` e uma cena por arquivo em `scenes/`.
+
+Props: `showSafeZone` (faixas vermelhas em y 0–250 e 1250–1920) e `withAudio`.
+
+Áudio (opcional, o render não quebra sem eles): `public/music.mp3`, `ping.mp3`, `pop.mp3`, `swoosh.mp3`, `success.mp3` e a locução em `public/barbearia/voz/<id>.mp3` (voz Felipe, Cartesia: `python3 scripts/gerar-voz.py barbearia`; depois confira `VOZ` em `timing.ts`).

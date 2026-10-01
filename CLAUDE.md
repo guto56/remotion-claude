@@ -5,14 +5,15 @@ Projeto Remotion do anúncio da Corso Automação, assistente de IA para WhatsAp
 ## Comandos
 
 - `npm run dev`: Remotion Studio
-- `npm run render:dor` / `render:pergunta` / `render:feed` / `render:treino` / `render:treino-16x9` / `render:dono` / `render:dono-feed` / `render:manual` (+ `capa:manual`): renderiza em `out/`
+- `npm run render:dor` / `render:pergunta` / `render:feed` / `render:treino` / `render:treino-16x9` / `render:dono` / `render:dono-feed` / `render:barbearia` / `render:barbearia-feed` / `render:manual` (+ `capa:manual`): renderiza em `out/`
 - `npx remotion still <CompId> out/x.png --frame=<n> --props='{"gancho":"dor","formato":"reels","showSafeZone":true,"withAudio":false}'`: checagem visual de um frame (com a área segura)
 - `npm run lint`: eslint + tsc
 
 ## Estrutura
 
-- `src/Root.tsx`: registra `Anuncio-Dor`, `Anuncio-Pergunta`, `Anuncio-Feed`, `Treino-Segunda`, `Treino-Segunda-16x9`, `Anuncio-Dono`, `Anuncio-Dono-Feed` e `ManualPintura`
-- `src/dono/`: anúncio "Dono de negócio" (Reels + Feed). Mesma organização do anúncio original: `copy.ts`, `theme.ts`, `timing.ts`, `layout.ts`. Locução pela Cartesia com `scripts/dono/gerar-voz.py` (chave só em `CARTESIA_API_KEY`, nunca no repositório; `api.cartesia.ai` precisa estar liberado na rede)
+- `src/Root.tsx`: registra `Anuncio-Dor`, `Anuncio-Pergunta`, `Anuncio-Feed`, `Treino-Segunda`, `Treino-Segunda-16x9`, `Anuncio-Dono`, `Anuncio-Dono-Feed`, `Barbearia`, `Barbearia-Feed` e `ManualPintura`
+- `src/dono/`: anúncio "Dono de negócio" (Reels + Feed). Mesma organização do anúncio original: `copy.ts`, `theme.ts`, `timing.ts`, `layout.ts`. Locução pela Cartesia com `scripts/gerar-voz.py dono` (chave só em `CARTESIA_API_KEY`, nunca no repositório; `api.cartesia.ai` precisa estar liberado na rede)
+- `src/barbearia/`: anúncio "Barbearia" (22 s, Reels + Feed), mesma organização do `src/dono/`, com `components/` (um por arquivo) e `scenes/` (uma cena por arquivo). Locução com `scripts/gerar-voz.py barbearia`, em `public/barbearia/voz/`
 - `src/config.ts` + `src/manual/`: vídeo `ManualPintura` (divulgação do manual de pintura). Tudo que é editável fica em `src/config.ts`; páginas do PDF em `public/pages/`, áudios (fornecidos pelo usuário) em `public/audio/`
 - `src/treino/`: vídeo editado "Treino de segunda" (veja README.md). `edl.ts` é gerado por `scripts/treino/preparar.py`; a mídia (`public/treino/*.mp4|wav`) não vai para o Git
 - `src/anuncio/copy.ts` (textos), `theme.ts` (cores/fontes), `timing.ts` (frames), `layout.ts` (posições por formato)

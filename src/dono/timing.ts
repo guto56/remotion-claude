@@ -74,7 +74,7 @@ export const BENEFICIOS = { titulo: 6, itens: 16, intervalo: 15 };
 export const CHAMADA = { logo: 2, titulo: 8, sub: 30, seta: 40 };
 
 // Locução (voz Felipe, Cartesia): [id do arquivo em public/dono/voz/, frame em
-// que começa, duração em frames]. As durações vêm de scripts/dono/gerar-voz.py;
+// que começa, duração em frames]. As durações vêm de scripts/gerar-voz.py dono;
 // se gerar de novo, atualize aqui e confira que uma fala não encosta na outra.
 export const VOZ: [string, number, number][] = [
   ["gancho", 4, 57], // cena 1

@@ -37,6 +37,8 @@
     "render:treino-16x9": "remotion render Treino-Segunda-16x9 out/treino-segunda-16x9.mp4 --codec h264 --crf 18",
     "render:dono": "remotion render Anuncio-Dono out/anuncio-dono.mp4 --codec h264 --crf 18",
     "render:dono-feed": "remotion render Anuncio-Dono-Feed out/anuncio-dono-feed.mp4 --codec h264 --crf 18",
+    "render:barbearia": "remotion render Barbearia out/barbearia.mp4 --codec h264 --crf 18",
+    "render:barbearia-feed": "remotion render Barbearia-Feed out/barbearia-feed.mp4 --codec h264 --crf 18",
     "render:manual": "remotion render ManualPintura out/manual-pintura.mp4 --codec h264 --crf 18",
     "capa:manual": "remotion still ManualPintura out/capa.png --frame=1150",
     "render:audio-dor": "remotion render Anuncio-Dor out/anuncio-dor-audio.mp3 --codec mp3",

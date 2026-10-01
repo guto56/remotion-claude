@@ -1,15 +1,16 @@
 #!/usr/bin/env python3
-"""Gera a locução do anúncio "Dono" na Cartesia (voz Felipe, português).
+"""Gera a locução de um anúncio na Cartesia (voz Felipe, português).
 
-Lê os textos de `locucao` em src/dono/copy.ts, gera uma fala por id, corta o
-silêncio, iguala o volume (mesmo tratamento de scripts/preparar-voz.py) e grava
-public/dono/voz/<id>.mp3, mostrando a duração em frames de cada uma.
+Lê os textos de `locucao` em src/<projeto>/copy.ts, gera uma fala por id, corta
+o silêncio, iguala o volume (mesmo tratamento de scripts/preparar-voz.py) e
+grava public/<projeto>/voz/<id>.mp3, mostrando a duração em frames de cada uma.
+Projetos: dono, barbearia.
 
 A chave fica só na variável de ambiente (nunca no repositório):
 
     export CARTESIA_API_KEY=sk_car_...
-    python3 scripts/dono/gerar-voz.py            # todas as falas
-    python3 scripts/dono/gerar-voz.py cta dor    # só algumas
+    python3 scripts/gerar-voz.py barbearia            # todas as falas
+    python3 scripts/gerar-voz.py barbearia cta dor    # só algumas
 
 Opcional: CARTESIA_VOICE_ID (pula a busca pela voz "Felipe") e
 CARTESIA_MODEL (padrão sonic-2).
@@ -24,16 +25,17 @@ import tempfile
 import urllib.parse
 import urllib.request
 
-ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
-COPY = os.path.join(ROOT, "src", "dono", "copy.ts")
-OUT = os.path.join(ROOT, "public", "dono", "voz")
+ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 API = "https://api.cartesia.ai"
 VERSAO = "2025-04-16"
 
 # Aceleração depois da geração (atempo, mantém o tom). O controle de
 # velocidade da própria Cartesia é inconsistente. 1.0 = sem mudança.
-ACELERA = 1.15
-ACELERA_POR_FALA = {"beneficios": 1.2, "dado": 1.25}
+# Por projeto: (padrão, {id: fator}).
+ACELERA = {
+    "dono": (1.15, {"beneficios": 1.2, "dado": 1.25}),
+    "barbearia": (1.15, {"dor": 1.2, "beneficios": 1.2}),
+}
 
 
 def chave():
@@ -73,9 +75,9 @@ def voz_felipe():
     return escolhida["id"]
 
 
-def falas():
+def falas(projeto):
     """Extrai o objeto `locucao: { id: "texto", ... }` de copy.ts."""
-    fonte = open(COPY, encoding="utf-8").read()
+    fonte = open(os.path.join(ROOT, "src", projeto, "copy.ts"), encoding="utf-8").read()
     bloco = re.search(r"locucao:\s*\{(.*?)\n  \}", fonte, re.S).group(1)
     return dict(re.findall(r'^\s*"?([\w-]+)"?:\s*"([^"]+)"', bloco, re.M))
 
@@ -86,11 +88,16 @@ def main():
     prep = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(prep)
 
-    textos = falas()
-    ids = sys.argv[1:] or list(textos)
+    if len(sys.argv) < 2 or sys.argv[1] not in ACELERA:
+        sys.exit(f"uso: gerar-voz.py <{'|'.join(ACELERA)}> [ids...]")
+    projeto = sys.argv[1]
+    padrao, por_fala = ACELERA[projeto]
+    out = os.path.join(ROOT, "public", projeto, "voz")
+    textos = falas(projeto)
+    ids = sys.argv[2:] or list(textos)
     voz = voz_felipe()
     modelo = os.environ.get("CARTESIA_MODEL", "sonic-2")
-    os.makedirs(OUT, exist_ok=True)
+    os.makedirs(out, exist_ok=True)
 
     with tempfile.TemporaryDirectory() as tmp:
         for i in ids:
@@ -108,10 +115,10 @@ def main():
             bruto = os.path.join(tmp, f"{i}.wav")
             open(bruto, "wb").write(audio)
             rapido = os.path.join(tmp, f"{i}-rapido.wav")
-            fator = ACELERA_POR_FALA.get(i, ACELERA)
+            fator = por_fala.get(i, padrao)
             prep.ffmpeg("-i", bruto, "-af", f"atempo={fator}", rapido)
             limpo, _ = prep.process(prep.read(rapido))
-            prep.write_mp3(limpo, os.path.join(OUT, f"{i}.mp3"))
+            prep.write_mp3(limpo, os.path.join(out, f"{i}.mp3"))
             frames = round(len(limpo) / prep.SR * prep.FPS)
             print(f"{i:<12} {frames:4d} frames  {textos[i]}")
 
