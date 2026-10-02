@@ -4,7 +4,7 @@
 Lê os textos de `locucao` em src/<projeto>/copy.ts, gera uma fala por id, corta
 o silêncio, iguala o volume (mesmo tratamento de scripts/preparar-voz.py) e
 grava public/<projeto>/voz/<id>.mp3, mostrando a duração em frames de cada uma.
-Projetos: dono, barbearia.
+Projetos: dono, barbearia, clinica.
 
 A chave fica só na variável de ambiente (nunca no repositório):
 
@@ -35,6 +35,7 @@ VERSAO = "2025-04-16"
 ACELERA = {
     "dono": (1.15, {"beneficios": 1.2, "dado": 1.25}),
     "barbearia": (1.15, {"dor": 1.2, "beneficios": 1.2}),
+    "clinica": (1.15, {"dor": 1.2, "demo": 1.2, "beneficios": 1.05}),
 }
 
 

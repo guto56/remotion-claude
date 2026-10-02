@@ -14,6 +14,8 @@ import { Dono, donoSchema } from "./dono/Dono";
 import { DURACAO as DONO_DURACAO, FPS as DONO_FPS } from "./dono/timing";
 import { Barbearia, barbeariaSchema } from "./barbearia/Barbearia";
 import { DURACAO as BARBEARIA_DURACAO, FPS as BARBEARIA_FPS } from "./barbearia/timing";
+import { Clinica, clinicaSchema } from "./clinica/Clinica";
+import { DURACAO as CLINICA_DURACAO, FPS as CLINICA_FPS } from "./clinica/timing";
 
 export const RemotionRoot: React.FC = () => {
   return (
@@ -129,6 +131,27 @@ export const RemotionRoot: React.FC = () => {
         schema={barbeariaSchema}
         durationInFrames={BARBEARIA_DURACAO}
         fps={BARBEARIA_FPS}
+        width={1080}
+        height={1350}
+        defaultProps={{ formato: "feed", showSafeZone: false, withAudio: true }}
+      />
+      {/* Anúncio "Clínica" (clínicas, consultórios e estética; Reels 9:16 e Feed 4:5) */}
+      <Composition
+        id="Clinica"
+        component={Clinica}
+        schema={clinicaSchema}
+        durationInFrames={CLINICA_DURACAO}
+        fps={CLINICA_FPS}
+        width={1080}
+        height={1920}
+        defaultProps={{ formato: "reels", showSafeZone: false, withAudio: true }}
+      />
+      <Composition
+        id="Clinica-Feed"
+        component={Clinica}
+        schema={clinicaSchema}
+        durationInFrames={CLINICA_DURACAO}
+        fps={CLINICA_FPS}
         width={1080}
         height={1350}
         defaultProps={{ formato: "feed", showSafeZone: false, withAudio: true }}
